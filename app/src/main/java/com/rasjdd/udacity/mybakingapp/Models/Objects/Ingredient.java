@@ -3,7 +3,9 @@ package com.rasjdd.udacity.mybakingapp.Models.Objects;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Ingredient {
+import java.io.Serializable;
+
+public class Ingredient implements Serializable {
 
     @SerializedName("quantity")
     @Expose
@@ -14,6 +16,7 @@ public class Ingredient {
     @SerializedName("ingredient")
     @Expose
     private String ingredient;
+    private final static long serialVersionUID = -4467237226196711602L;
 
     /**
      * No args constructor for use in serialization

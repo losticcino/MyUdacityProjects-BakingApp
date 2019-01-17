@@ -3,9 +3,10 @@ package com.rasjdd.udacity.mybakingapp.Models.Objects;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Recipe {
+public class Recipe implements Serializable {
 
     @SerializedName("id")
     @Expose
@@ -25,6 +26,7 @@ public class Recipe {
     @SerializedName("image")
     @Expose
     private String image;
+    private final static long serialVersionUID = 4589774361106362740L;
 
     /**
      * No args constructor for use in serialization

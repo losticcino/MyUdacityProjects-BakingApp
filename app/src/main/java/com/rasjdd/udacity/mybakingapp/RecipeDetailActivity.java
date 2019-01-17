@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
+import com.rasjdd.udacity.mybakingapp.Utilities.Constants;
+
 /**
  * An activity representing a single Recipe detail screen. This
  * activity is only used on narrow width devices. On tablet-size devices,
@@ -34,6 +36,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
             Bundle arguments = new Bundle();
             arguments.putString(RecipeDetailFragment.ARG_ITEM_ID,
                     getIntent().getStringExtra(RecipeDetailFragment.ARG_ITEM_ID));
+            arguments.putSerializable(Constants.keyFullRecipe,
+                    getIntent().getSerializableExtra(Constants.keyFullRecipe));
             RecipeDetailFragment fragment = new RecipeDetailFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()

@@ -3,23 +3,26 @@ package com.rasjdd.udacity.mybakingapp.Models.Objects;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Step {
+import java.io.Serializable;
+
+public class Step implements Serializable {
 
     @SerializedName("id")
-//    @Expose
+    @Expose
     private int id;
     @SerializedName("shortDescription")
-//    @Expose
+    @Expose
     private String shortDescription;
     @SerializedName("description")
-//    @Expose
+    @Expose
     private String description;
     @SerializedName("videoURL")
-//    @Expose
+    @Expose
     private String videoURL;
     @SerializedName("thumbnailURL")
-//    @Expose
+    @Expose
     private String thumbnailURL;
+    private final static long serialVersionUID = 5305018215332620957L;
 
     /**
      * No args constructor for use in serialization

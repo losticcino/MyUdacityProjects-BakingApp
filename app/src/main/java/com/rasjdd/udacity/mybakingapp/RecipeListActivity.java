@@ -16,8 +16,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.rasjdd.udacity.mybakingapp.Models.Objects.Recipe;
 import com.rasjdd.udacity.mybakingapp.Adapters.RecipeListViewAdapter;
+import com.rasjdd.udacity.mybakingapp.Models.Objects.Recipe;
 import com.rasjdd.udacity.mybakingapp.Utilities.Constants;
 import com.rasjdd.udacity.mybakingapp.Utilities.NetUtils;
 
@@ -51,6 +51,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
 
         mViewAdapter = new RecipeListViewAdapter(this::onRecipeClick);
         recyclerView = findViewById(R.id.containerRecipeList);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(mViewAdapter);
 
         if (mRequestQueue == null) mRequestQueue = Volley.newRequestQueue(this);
@@ -91,6 +92,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
             Bundle arguments = new Bundle();
 //                    arguments.putInt(Constants.keyFullRecipe, recipe.getId());
             arguments.putString(RecipeDetailFragment.ARG_ITEM_ID, String.valueOf(recipe.getId()));
+            arguments.putSerializable(Constants.keyFullRecipe, recipe);
             RecipeDetailFragment fragment = new RecipeDetailFragment();
             fragment.setArguments(arguments);
             this.getSupportFragmentManager().beginTransaction()
@@ -99,91 +101,11 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
         } else {
             Intent intent = new Intent(this, RecipeDetailActivity.class);
             intent.putExtra(RecipeDetailFragment.ARG_ITEM_ID, String.valueOf(recipe.getId()));
+            intent.putExtra(Constants.keyFullRecipe,recipe);
 
             startActivity(intent);
         }
     }
-
-//    private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-//        recyclerView.setAdapter(new SimpleItemRecyclerViewAdapter(this, mRecipeList, mTwoPane));
-//    }
-
-
-
-//    public class SimpleItemRecyclerViewAdapter
-//            extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
-//
-//        private final RecipeListActivity mParentActivity;
-//        private ArrayList<Recipe> mValues;
-//        private final boolean mTwoPane;
-//        private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Recipe recipe = (Recipe) view.getTag();
-//                if (mTwoPane) {
-//                    Bundle arguments = new Bundle();
-////                    arguments.putInt(Constants.keyFullRecipe, recipe.getId());
-//                    arguments.putInt(RecipeDetailFragment.ARG_ITEM_ID, recipe.getId());
-//                    RecipeDetailFragment fragment = new RecipeDetailFragment();
-//                    fragment.setArguments(arguments);
-//                    mParentActivity.getSupportFragmentManager().beginTransaction()
-//                            .replace(R.id.containerRecipeStepsWide, fragment)
-//                            .commit();
-//                } else {
-//                    Context context = view.getContext();
-//                    Intent intent = new Intent(context, RecipeDetailActivity.class);
-//                    intent.putExtra(RecipeDetailFragment.ARG_ITEM_ID, recipe.getId());
-//
-//                    context.startActivity(intent);
-//                }
-//            }
-//        };
-//
-//        SimpleItemRecyclerViewAdapter(RecipeListActivity parent,
-//                                      ArrayList<Recipe> items,
-//                                      boolean twoPane) {
-//            mValues = items;
-//            mParentActivity = parent;
-//            mTwoPane = twoPane;
-//        }
-//
-//        @Override
-//        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//            View view = LayoutInflater.from(parent.getContext())
-//                    .inflate(R.layout.recipe_list_content, parent, false);
-//            return new ViewHolder(view);
-//        }
-//
-//        @Override
-//        public void onBindViewHolder(final ViewHolder holder, int position) {
-//            holder.mIdView.setText(mValues.get(position).getName());
-//            holder.mContentView.setText(mValues.get(position).getName());
-//
-//            holder.itemView.setTag(mValues.get(position));
-//            holder.itemView.setOnClickListener(mOnClickListener);
-//        }
-//
-//        @Override
-//        public int getItemCount() {
-//            return 0;
-//        }
-//
-//        class ViewHolder extends RecyclerView.ViewHolder {
-//            final TextView mIdView;
-//            final TextView mContentView;
-//
-//            ViewHolder(View view) {
-//                super(view);
-//                mIdView = (TextView) view.findViewById(R.id.id_text);
-//                mContentView = (TextView) view.findViewById(R.id.content);
-//            }
-//        }
-//
-//        public void setRecipeList(ArrayList<Recipe> recipes) {
-//            mValues = recipes;
-//            notifyDataSetChanged();
-//        }
-//    }
 
     // ---------- VOLLEY FUNCTION ----------
 
