@@ -1,8 +1,8 @@
-package com.rasjdd.udacity.mybakingapp;
+package com.rasjdd.udacity.mybakingapp.Fragments;
 
 import android.app.Activity;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import com.rasjdd.udacity.mybakingapp.Models.Objects.Recipe;
 import com.rasjdd.udacity.mybakingapp.Models.Objects.Step;
-import com.rasjdd.udacity.mybakingapp.Models.dummy.DummyContent;
+import com.rasjdd.udacity.mybakingapp.R;
+import com.rasjdd.udacity.mybakingapp.RecipeDetailActivity;
+import com.rasjdd.udacity.mybakingapp.RecipeListActivity;
 import com.rasjdd.udacity.mybakingapp.Utilities.Constants;
 
 /**
@@ -20,23 +22,17 @@ import com.rasjdd.udacity.mybakingapp.Utilities.Constants;
  * in two-pane mode (on tablets) or a {@link RecipeDetailActivity}
  * on handsets.
  */
-public class RecipeDetailFragment extends Fragment {
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
-    public static final String ARG_ITEM_ID = "item_id";
-
-    /**
-     * The dummy content this fragment is presenting.
-     */
-    private DummyContent.DummyItem mItem;
+public class RecipeIngredientFragment extends Fragment {
+//    /**
+//     * The fragment argument representing the item ID that this fragment
+//     * represents.
+//     */
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public RecipeDetailFragment() {
+    public RecipeIngredientFragment() {
     }
 
     private Recipe mRecipe;
@@ -53,6 +49,7 @@ public class RecipeDetailFragment extends Fragment {
             if (appBarLayout != null) {
                 appBarLayout.setTitle(mRecipe.getName());
             }
+
         }
     }
 

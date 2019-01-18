@@ -17,6 +17,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rasjdd.udacity.mybakingapp.Adapters.RecipeListViewAdapter;
+import com.rasjdd.udacity.mybakingapp.Fragments.RecipeStepFragment;
 import com.rasjdd.udacity.mybakingapp.Models.Objects.Recipe;
 import com.rasjdd.udacity.mybakingapp.Utilities.Constants;
 import com.rasjdd.udacity.mybakingapp.Utilities.NetUtils;
@@ -75,7 +76,6 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
 
         View recyclerView = findViewById(R.id.containerRecipeList);
         assert recyclerView != null;
-//        setupRecyclerView((RecyclerView) recyclerView);
     }
 
     private void getRecipeList() {
@@ -86,21 +86,19 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
         }
     }
 
+    // Actions to perform on click
     @Override
     public void onRecipeClick(Recipe recipe) {
         if (mTwoPane) {
             Bundle arguments = new Bundle();
-//                    arguments.putInt(Constants.keyFullRecipe, recipe.getId());
-            arguments.putString(RecipeDetailFragment.ARG_ITEM_ID, String.valueOf(recipe.getId()));
             arguments.putSerializable(Constants.keyFullRecipe, recipe);
-            RecipeDetailFragment fragment = new RecipeDetailFragment();
+            RecipeStepFragment fragment = new RecipeStepFragment();
             fragment.setArguments(arguments);
             this.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.containerRecipeStepsWide, fragment)
                     .commit();
         } else {
             Intent intent = new Intent(this, RecipeDetailActivity.class);
-            intent.putExtra(RecipeDetailFragment.ARG_ITEM_ID, String.valueOf(recipe.getId()));
             intent.putExtra(Constants.keyFullRecipe,recipe);
 
             startActivity(intent);

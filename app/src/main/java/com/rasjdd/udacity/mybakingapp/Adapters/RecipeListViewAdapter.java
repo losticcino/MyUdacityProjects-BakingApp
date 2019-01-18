@@ -47,9 +47,7 @@ public class RecipeListViewAdapter extends RecyclerView.Adapter<RecipeListViewAd
                     .placeholder(R.drawable.bread_icon)
                     .into(recipeListViewHolder.mImagePreview);
         } else {
-            Picasso.get()
-                    .load(R.drawable.bread_icon)
-                    .into(recipeListViewHolder.mImagePreview);
+            recipeListViewHolder.mImagePreview.setImageResource(R.drawable.bread_icon);
         }
     }
 

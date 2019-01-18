@@ -3,4 +3,40 @@
     <string name="title_recipe_detail">Recipe Detail</string>
     <string name="place_holder">place holder</string>
     <string name="servings_tag">Serves</string>
+    <string name="step">Step</string>
+
+    <!--Step Number for app title and localization-->
+    <string-array name="step_title_for_localization">
+        <item>Introduction</item>
+        <item>Step One</item>
+        <item>Step Two</item>
+        <item>Step Three</item>
+        <item>Step Four</item>
+        <item>Step Five</item>
+        <item>Step Six</item>
+        <item>Step Seven</item>
+        <item>Step Eight</item>
+        <item>Step Nine</item>
+        <item>Step Ten</item>
+        <item>Step Eleven</item>
+        <item>Step Twelve</item>
+        <item>Step Thirteen</item>
+        <item>Step Fourteen</item>
+        <item>Step Fifteen</item>
+        <item>Step Sixteen</item>
+        <item>Step Seventeen</item>
+        <item>Step Eighteen</item>
+        <item>Step Nineteen</item>
+        <item>Step Twenty</item>
+        <item>Step Twenty-One</item>
+        <item>Step Twenty-Two</item>
+        <item>Step Twenty-Three</item>
+        <item>Step Twenty-Four</item>
+        <item>Step Twenty-Five</item>
+        <item>Step Twenty-Six</item>
+        <item>Step Twenty-Seven</item>
+        <item>Step Twenty-Eight</item>
+        <item>Step Twenty-Nine</item>
+        <item>Step Thirty</item>
+    </string-array>
 </resources>

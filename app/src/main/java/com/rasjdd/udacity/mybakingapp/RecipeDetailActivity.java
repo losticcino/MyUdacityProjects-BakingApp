@@ -2,11 +2,12 @@ package com.rasjdd.udacity.mybakingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.rasjdd.udacity.mybakingapp.Fragments.RecipeStepFragment;
 import com.rasjdd.udacity.mybakingapp.Utilities.Constants;
 
 /**
@@ -20,7 +21,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recipe_detail);
+        setContentView(R.layout.fragment_ingredient_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarRecipeSteps);
         setSupportActionBar(toolbar);
 
@@ -34,14 +35,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
             // Create the detail fragment and add it to the activity
             // using a fragment transaction.
             Bundle arguments = new Bundle();
-            arguments.putString(RecipeDetailFragment.ARG_ITEM_ID,
-                    getIntent().getStringExtra(RecipeDetailFragment.ARG_ITEM_ID));
             arguments.putSerializable(Constants.keyFullRecipe,
                     getIntent().getSerializableExtra(Constants.keyFullRecipe));
-            RecipeDetailFragment fragment = new RecipeDetailFragment();
+            RecipeStepFragment fragment = new RecipeStepFragment();
             fragment.setArguments(arguments);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.containerRecipeSteps, fragment)
+                    .add(R.id.containerIngredientsContent, fragment)
                     .commit();
         }
     }

@@ -6,7 +6,7 @@
     <color name="colorSecondary">#e0f7fa</color>
     <color name="colorSecondaryLight">#ffffff</color>
     <color name="colorSecondaryDark">#aec4c7</color>
-    <color name="textPrimary">#ffffff</color>
-    <color name="textAlternateDark">#000000</color>
+    <color name="textLight">#ffffff</color>
+    <color name="textDark">#000000</color>
     <color name="colorAccent">#ffe0b2</color>
 </resources>
