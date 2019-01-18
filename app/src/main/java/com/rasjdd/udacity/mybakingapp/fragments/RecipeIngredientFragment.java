@@ -1,4 +1,4 @@
-package com.rasjdd.udacity.mybakingapp.Fragments;
+package com.rasjdd.udacity.mybakingapp.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,17 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.rasjdd.udacity.mybakingapp.Models.Objects.Recipe;
-import com.rasjdd.udacity.mybakingapp.Models.Objects.Step;
+import com.rasjdd.udacity.mybakingapp.models.Recipe;
+import com.rasjdd.udacity.mybakingapp.models.Step;
 import com.rasjdd.udacity.mybakingapp.R;
-import com.rasjdd.udacity.mybakingapp.RecipeDetailActivity;
+import com.rasjdd.udacity.mybakingapp.StepDetailActivity;
 import com.rasjdd.udacity.mybakingapp.RecipeListActivity;
-import com.rasjdd.udacity.mybakingapp.Utilities.Constants;
+import com.rasjdd.udacity.mybakingapp.utilities.Constants;
 
 /**
  * A fragment representing a single Recipe detail screen.
  * This fragment is either contained in a {@link RecipeListActivity}
- * in two-pane mode (on tablets) or a {@link RecipeDetailActivity}
+ * in two-pane mode (on tablets) or a {@link StepDetailActivity}
  * on handsets.
  */
 public class RecipeIngredientFragment extends Fragment {

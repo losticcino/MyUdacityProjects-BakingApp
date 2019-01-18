@@ -1,4 +1,4 @@
-package com.rasjdd.udacity.mybakingapp.Adapters;
+package com.rasjdd.udacity.mybakingapp.adapters;
 
 import android.content.res.Resources;
 import android.support.annotation.NonNull;
@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.rasjdd.udacity.mybakingapp.Models.Objects.Recipe;
+import com.rasjdd.udacity.mybakingapp.models.Recipe;
 import com.rasjdd.udacity.mybakingapp.R;
-import com.rasjdd.udacity.mybakingapp.Utilities.NetUtils;
+import com.rasjdd.udacity.mybakingapp.utilities.NetUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -37,13 +37,16 @@ public class RecipeListViewAdapter extends RecyclerView.Adapter<RecipeListViewAd
 
     @Override
     public void onBindViewHolder(@NonNull RecipeListViewHolder recipeListViewHolder, int i) {
-        recipeListViewHolder.mNameView.setText(mRecipes.get(i).getName());
-        recipeListViewHolder.mDetailView.setText(resources.getString(R.string.servings_tag) + ": "
-                + String.valueOf((int) mRecipes.get(i).getServings()));
+        Recipe recipe = mRecipes.get(i);
 
-        if (NetUtils.isGraphicFileformat(mRecipes.get(i).getImage())) {
+        recipeListViewHolder.mNameView.setText(recipe.getName());
+
+        String s = resources.getString(R.string.servings_tag) + ": "+ String.valueOf((int) recipe.getServings());
+        recipeListViewHolder.mDetailView.setText(s);
+
+        if (NetUtils.isGraphicFileformat(recipe.getImage())) {
             Picasso.get()
-                    .load(mRecipes.get(i).getImage())
+                    .load(recipe.getImage())
                     .placeholder(R.drawable.bread_icon)
                     .into(recipeListViewHolder.mImagePreview);
         } else {

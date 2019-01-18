@@ -4,6 +4,8 @@
     <string name="place_holder">place holder</string>
     <string name="servings_tag">Serves</string>
     <string name="step">Step</string>
+    <string name="previous_step_button"><![CDATA[< Back Step]]></string>
+    <string name="next_step_button"><![CDATA[Next Step >]]></string>
 
     <!--Step Number for app title and localization-->
     <string-array name="step_title_for_localization">
@@ -39,4 +41,14 @@
         <item>Step Twenty-Nine</item>
         <item>Step Thirty</item>
     </string-array>
+
+    <!--Widget Strings-->
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="appwidget_ingredient_text">Ingredient List</string>
+    <string name="appwidget_header_text">Recipe</string>
+    <string name="send_to_widget">Send to Widget</string>
+    <string name="intent_failed">A Data Error Occurred</string>
+    <string name="widget_updated">Widget Updated</string>
+
 </resources>

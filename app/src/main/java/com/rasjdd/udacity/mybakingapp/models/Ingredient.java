@@ -1,4 +1,4 @@
-package com.rasjdd.udacity.mybakingapp.Models.Objects;
+package com.rasjdd.udacity.mybakingapp.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

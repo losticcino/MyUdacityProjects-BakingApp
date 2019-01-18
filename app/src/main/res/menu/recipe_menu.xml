@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/actionSendToWidget"
+        android:title="@string/send_to_widget"
+        android:tooltipText="@string/send_to_widget"
+        android:icon="@drawable/ic_playlist_add_check_blue_50_24dp"
+        app:showAsAction="always" />
+
+</menu>

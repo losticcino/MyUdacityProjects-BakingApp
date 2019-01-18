@@ -1,4 +1,4 @@
-package com.rasjdd.udacity.mybakingapp.Utilities;
+package com.rasjdd.udacity.mybakingapp.utilities;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

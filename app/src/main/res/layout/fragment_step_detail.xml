@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_width="match_parent" >
+    android:orientation="vertical">
 
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/step_player_height"
         android:id="@+id/playerStepVideo"
-        android:visibility="gone"
-        tools:context=".Fragments.RecipeStepFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/textStepInstructions"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/containerStepsInformation"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        style="@style/DefaultTextStyle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/playerStepVideo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/playerStepVideo"
-        app:layout_constraintVertical_bias="0.0"
-        tools:context=".Fragments.RecipeStepFragment" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <TextView
+            android:id="@+id/textStepInstructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp" />
+    </android.support.v4.widget.NestedScrollView>
+
+
 
 </android.support.constraint.ConstraintLayout>

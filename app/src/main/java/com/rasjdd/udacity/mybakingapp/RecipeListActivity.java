@@ -16,11 +16,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.rasjdd.udacity.mybakingapp.Adapters.RecipeListViewAdapter;
-import com.rasjdd.udacity.mybakingapp.Fragments.RecipeStepFragment;
-import com.rasjdd.udacity.mybakingapp.Models.Objects.Recipe;
-import com.rasjdd.udacity.mybakingapp.Utilities.Constants;
-import com.rasjdd.udacity.mybakingapp.Utilities.NetUtils;
+import com.rasjdd.udacity.mybakingapp.adapters.RecipeListViewAdapter;
+import com.rasjdd.udacity.mybakingapp.fragments.RecipeStepFragment;
+import com.rasjdd.udacity.mybakingapp.models.Recipe;
+import com.rasjdd.udacity.mybakingapp.utilities.AppUtilities;
+import com.rasjdd.udacity.mybakingapp.utilities.Constants;
+import com.rasjdd.udacity.mybakingapp.utilities.NetUtils;
+import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
 
 import java.util.ArrayList;
 
@@ -28,7 +30,7 @@ import java.util.ArrayList;
  * An activity representing a list of RecipeList. This activity
  * has different presentations for handset and tablet-size devices. On
  * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link RecipeDetailActivity} representing
+ * lead to a {@link StepDetailActivity} representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
@@ -89,6 +91,9 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
     // Actions to perform on click
     @Override
     public void onRecipeClick(Recipe recipe) {
+        AppUtilities.saveRecipe(this,recipe);
+        IngredientListWidgetService.updateWidget(this, recipe);
+
         if (mTwoPane) {
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.keyFullRecipe, recipe);
@@ -98,7 +103,7 @@ public class RecipeListActivity extends AppCompatActivity implements RecipeListV
                     .replace(R.id.containerRecipeStepsWide, fragment)
                     .commit();
         } else {
-            Intent intent = new Intent(this, RecipeDetailActivity.class);
+            Intent intent = new Intent(this, StepDetailActivity.class);
             intent.putExtra(Constants.keyFullRecipe,recipe);
 
             startActivity(intent);

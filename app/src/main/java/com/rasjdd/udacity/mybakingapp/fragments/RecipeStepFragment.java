@@ -1,11 +1,9 @@
-package com.rasjdd.udacity.mybakingapp.Fragments;
+package com.rasjdd.udacity.mybakingapp.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,18 +19,18 @@ import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
-import com.rasjdd.udacity.mybakingapp.Models.Objects.Recipe;
-import com.rasjdd.udacity.mybakingapp.Models.Objects.Step;
 import com.rasjdd.udacity.mybakingapp.R;
-import com.rasjdd.udacity.mybakingapp.RecipeDetailActivity;
 import com.rasjdd.udacity.mybakingapp.RecipeListActivity;
-import com.rasjdd.udacity.mybakingapp.Utilities.Constants;
-import com.rasjdd.udacity.mybakingapp.Utilities.NetUtils;
+import com.rasjdd.udacity.mybakingapp.StepDetailActivity;
+import com.rasjdd.udacity.mybakingapp.models.Recipe;
+import com.rasjdd.udacity.mybakingapp.models.Step;
+import com.rasjdd.udacity.mybakingapp.utilities.Constants;
+import com.rasjdd.udacity.mybakingapp.utilities.NetUtils;
 
 /**
  * A fragment representing a single Recipe detail screen.
  * This fragment is either contained in a {@link RecipeListActivity}
- * in two-pane mode (on tablets) or a {@link RecipeDetailActivity}
+ * in two-pane mode (on tablets) or a {@link StepDetailActivity}
  * on handsets.
  */
 public class RecipeStepFragment extends Fragment {
@@ -61,20 +59,10 @@ public class RecipeStepFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mCurrentStep = 2;
 
-        if (getArguments().containsKey(Constants.keyFullRecipe)) {
-            mRecipe = (Recipe) getArguments().getSerializable(Constants.keyFullRecipe);
-
-            Activity activity = this.getActivity();
-            CollapsingToolbarLayout appBarLayout = (CollapsingToolbarLayout) activity.findViewById(R.id.layoutRecipeStepsToolbar);
-            if (appBarLayout != null) {
-                appBarLayout.setTitle(mRecipe.getName());
-            }
-
+        if (getArguments().containsKey(Constants.keyRecipeStep)) {
+            mStep = (Step) getArguments().getSerializable(Constants.keyRecipeStep);
         }
-
-        mStep = mRecipe.getSteps().get(mCurrentStep);
     }
 
     @Override
@@ -82,9 +70,9 @@ public class RecipeStepFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_step_detail, container, false);
 
-        String[] localizedTitleNames = this.getResources().getStringArray(R.array.step_title_for_localization);
-        if (mStep.getId() <= localizedTitleNames.length) this.getActivity().setTitle(localizedTitleNames[mStep.getId()]);
-        else this.getActivity().setTitle(String.valueOf(this.getString(R.string.step)));
+//        String[] localizedTitleNames = this.getResources().getStringArray(R.array.step_title_for_localization);
+//        if (mStep.getId() <= localizedTitleNames.length) this.getActivity().setTitle(localizedTitleNames[mStep.getId()]);
+//        else this.getActivity().setTitle(String.valueOf(this.getString(R.string.step)));
 
         mPlayerView = rootView.findViewById(R.id.playerStepVideo);
         TextView textView = rootView.findViewById(R.id.textStepInstructions);
@@ -99,7 +87,10 @@ public class RecipeStepFragment extends Fragment {
         }
 
         if (!mVideoUrlString.equals(Constants.InvalidString)) {
+            mPlayerView.setVisibility(View.VISIBLE);
             initializeVideoPlayer(mVideoUrlString, this.getContext());
+        } else{
+            mPlayerView.setVisibility(View.GONE);
         }
         return rootView;
     }
@@ -125,4 +116,9 @@ public class RecipeStepFragment extends Fragment {
         outState.putLong(Constants.keyPlayerPosition, mVideoPlayer.getContentPosition());
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mVideoPlayer.release();
+    }
 }

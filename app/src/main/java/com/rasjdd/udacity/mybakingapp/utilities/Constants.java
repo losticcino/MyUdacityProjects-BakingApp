@@ -1,4 +1,4 @@
-package com.rasjdd.udacity.mybakingapp.Utilities;
+package com.rasjdd.udacity.mybakingapp.utilities;
 
 public class Constants {
 
@@ -11,6 +11,9 @@ public class Constants {
     public static final String keyFullRecipe = "37c919e5-702b-41c1-938c-faf4cee258bf";
     public static final String keyPlayerPosition = "8915fce7-30bf-4111-a834-91c554f85770";
     public static final String keyPlayerPlaying = "3024d563-4174-4be3-a6fb-618797eb0510";
+    public static final String keyAppPreferences = "550186ed-5a4e-4628-9e59-b030b5e3a0e2";
+    public static final String keyWidgetRecipe = "ec798ff8-f814-4a11-b76b-eac6f53860a7";
+    public static final String keyRecipeStep = "2e167354-eaa4-4b95-a1e7-7c3c804a8ccd";
 
     // Safe Null Values
     public static final String InvalidString = "This is a constant-defined null string." +
@@ -18,9 +21,6 @@ public class Constants {
 
     /* Available Pre-generated UUIDs
 
-    550186ed-5a4e-4628-9e59-b030b5e3a0e2
-    ec798ff8-f814-4a11-b76b-eac6f53860a7
-    2e167354-eaa4-4b95-a1e7-7c3c804a8ccd
     07aafd11-f1be-4031-b193-3a87cf8d03ed
     dbe97155-803c-4ff8-8829-6298485a4610
     9a180f45-16db-4fab-8ea3-c7db1e4bb800
