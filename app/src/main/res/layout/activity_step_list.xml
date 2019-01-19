@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/containerStepsList"
-    android:name="com.rasjdd.udacity.mybakingapp.RecipeStepFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="0dp"
-    android:layout_marginRight="0dp"
-    android:paddingStart="8dp"
-    android:paddingEnd="8dp"
-    android:background="@color/colorSecondaryDark"
-    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-    tools:listitem="@layout/recipe_list_content" />
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/ingredients_list"
+        android:id="@+id/containerIngredientsIncluded" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/containerStepsList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:background="@color/colorSecondaryDark"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:layout_below="@id/containerIngredientsIncluded"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+</RelativeLayout>

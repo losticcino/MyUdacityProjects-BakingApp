@@ -36,7 +36,6 @@ public class Recipe implements Serializable {
 //    }
 
     /**
-     *
      * @param ingredients
      * @param id
      * @param servings

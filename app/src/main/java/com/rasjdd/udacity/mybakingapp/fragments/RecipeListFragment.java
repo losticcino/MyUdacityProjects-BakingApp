@@ -145,7 +145,7 @@ public class RecipeListFragment extends Fragment {
             if (savedInstanceState != null && savedInstanceState.containsKey(Constants.keyRecipeList)) {
                 mRecipes = (ArrayList<Recipe>) savedInstanceState.getSerializable(Constants.keyRecipeList);
 
-                mRecycler.setAdapter( new RecipeListAdapter(getActivity().getApplicationContext(),
+                mRecycler.setAdapter(new RecipeListAdapter(getActivity().getApplicationContext(),
                         position -> mClickListener.onRecipeSelected(mRecipes.get(position))));
             }
         }

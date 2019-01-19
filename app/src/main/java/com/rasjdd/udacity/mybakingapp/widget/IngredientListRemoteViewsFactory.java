@@ -13,7 +13,7 @@ public class IngredientListRemoteViewsFactory implements RemoteViewsService.Remo
     private Context mContext;
     private Recipe mRecipe;
 
-    IngredientListRemoteViewsFactory(Context context){
+    IngredientListRemoteViewsFactory(Context context) {
         this.mContext = context;
     }
 
@@ -44,8 +44,9 @@ public class IngredientListRemoteViewsFactory implements RemoteViewsService.Remo
         // Make the ingredient entry pretty
         Ingredient ingredient = mRecipe.getIngredients().get(position);
         String s = ingredient.getIngredient() + " - " + String.valueOf(ingredient.getQuantity());
-        if (s.endsWith(".0")) s = s.substring(0,s.length() - 2);
-        if (!ingredient.getMeasure().toLowerCase().equals("unit")) s += " " + ingredient.getMeasure();
+        if (s.endsWith(".0")) s = s.substring(0, s.length() - 2);
+        if (!ingredient.getMeasure().toLowerCase().equals("unit"))
+            s += " " + ingredient.getMeasure();
 //        StyleSpan boldTypeFace = new StyleSpan(Typeface.BOLD);
 //        SpannableStringBuilder ingredientBuilder = new SpannableStringBuilder(s);
 //        ingredientBuilder.setSpan(boldTypeFace, 0, s.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);

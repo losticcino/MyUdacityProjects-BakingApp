@@ -38,7 +38,7 @@ public class StepsFragmentPagerAdapter extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        if (position > 0) return mContext.getString(R.string.step) + " " + String.valueOf(position );
+        if (position > 0) return mContext.getString(R.string.step) + " " + String.valueOf(position);
         return String.valueOf(mContext.getString(R.string.introduction));
     }
 

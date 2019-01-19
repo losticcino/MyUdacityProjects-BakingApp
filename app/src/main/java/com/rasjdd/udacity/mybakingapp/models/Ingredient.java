@@ -26,7 +26,6 @@ public class Ingredient implements Serializable {
 //    }
 
     /**
-     *
      * @param measure
      * @param ingredient
      * @param quantity

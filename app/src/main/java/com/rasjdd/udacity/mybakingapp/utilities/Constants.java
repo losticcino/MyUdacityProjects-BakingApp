@@ -3,7 +3,7 @@ package com.rasjdd.udacity.mybakingapp.utilities;
 public class Constants {
 
     // External Resources
-    public static final String RecipeListUrl="https://go.udacity.com/android-baking-app-json";
+    public static final String RecipeListUrl = "https://go.udacity.com/android-baking-app-json";
 
     // Data Keys
     public static final String keyRecipeList = "2a4bea67-bfb8-4888-9b44-c53f9ba2e591";

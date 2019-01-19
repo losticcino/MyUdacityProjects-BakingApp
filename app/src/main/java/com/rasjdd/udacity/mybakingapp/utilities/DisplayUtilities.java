@@ -10,15 +10,16 @@ import com.rasjdd.udacity.mybakingapp.models.Ingredient;
 
 public class DisplayUtilities {
 
-    public void prettyIngredientView(Ingredient ingredient, TextView textView) {
+    public static void prettyIngredientView(Ingredient ingredient, TextView textView) {
 
         String s = String.valueOf(ingredient.getQuantity());
 
         // Clean the measurement a little
-        if (s.endsWith(".0")) s = s.substring(0,s.length() - 2);
+        if (s.endsWith(".0")) s = s.substring(0, s.length() - 2);
 
         // Don't add the quantifier if it is just "UNIT"
-        if (!ingredient.getMeasure().toLowerCase().equals("unit")) s+= " " + ingredient.getMeasure();
+        if (!ingredient.getMeasure().toLowerCase().equals("unit"))
+            s += " " + ingredient.getMeasure();
 
         // Create Bold typeface for the measurement
         StyleSpan boldTypeFace = new StyleSpan(Typeface.BOLD);
@@ -31,6 +32,6 @@ public class DisplayUtilities {
         ingredientBuilder.append(" ").append(ingredient.getIngredient());
 
         // Set the view.
-        textView.setText(ingredientBuilder);
+        textView.append(ingredientBuilder);
     }
 }

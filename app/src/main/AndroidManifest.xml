@@ -25,6 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
 
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
@@ -51,8 +52,7 @@
             android:name=".StepDetailActivitySingle"
             android:label="@string/title_step_detail_single"
             android:parentActivityName=".StepDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.rasjdd.udacity.mybakingapp.StepDetailActivity" />

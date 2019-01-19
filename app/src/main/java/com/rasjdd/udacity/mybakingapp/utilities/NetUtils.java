@@ -6,7 +6,7 @@ import android.net.NetworkInfo;
 
 public class NetUtils {
 
-    public static boolean testConnectivityBasic(Context context){
+    public static boolean testConnectivityBasic(Context context) {
         ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connMgr.getActiveNetworkInfo();
 
@@ -15,7 +15,7 @@ public class NetUtils {
     }
 
     public static String detectVideoUrl(String videoURL, String thumbnailURL) {
-        if (videoURL.toLowerCase().endsWith(".mp4")) return  videoURL;
+        if (videoURL.toLowerCase().endsWith(".mp4")) return videoURL;
         else if (thumbnailURL.toLowerCase().endsWith(".mp4")) return thumbnailURL;
         else return Constants.InvalidString;
     }
@@ -26,7 +26,7 @@ public class NetUtils {
         else return Constants.InvalidString;
     }
 
-    public static boolean isGraphicFileformat(String s){
+    public static boolean isGraphicFileformat(String s) {
         if (s.toLowerCase().endsWith(".jpg")) return true;
 //        else if (s.toLowerCase().endsWith(".jpeg")) return true; //Supposedly Picasso doesn't support this?  TEST!
         else if (s.toLowerCase().endsWith(".png")) return true;

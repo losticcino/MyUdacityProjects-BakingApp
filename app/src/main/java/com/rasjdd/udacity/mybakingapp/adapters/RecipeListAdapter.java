@@ -32,7 +32,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
     @NonNull
     @Override
     public RecipeListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        if (mRecipes == null) mRecipes= new ArrayList<>();
+        if (mRecipes == null) mRecipes = new ArrayList<>();
         resources = viewGroup.getResources();
         View view = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recipe_card, viewGroup, false);
@@ -45,7 +45,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
         recipeListViewHolder.mNameView.setText(recipe.getName());
 
-        String s = resources.getString(R.string.servings_tag) + ": "+ String.valueOf((int) recipe.getServings());
+        String s = resources.getString(R.string.servings_tag) + ": " + String.valueOf((int) recipe.getServings());
         recipeListViewHolder.mDetailView.setText(s);
 
         if (NetUtils.isGraphicFileformat(recipe.getImage())) {
@@ -64,10 +64,9 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     @Override
     public int getItemCount() {
-        if (mRecipes == null){
+        if (mRecipes == null) {
             return 0;
-        }
-        else {
+        } else {
             return mRecipes.size();
         }
     }

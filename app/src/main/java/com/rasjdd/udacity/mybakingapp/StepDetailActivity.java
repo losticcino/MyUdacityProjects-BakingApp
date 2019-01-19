@@ -12,13 +12,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rasjdd.udacity.mybakingapp.adapters.StepsFragmentPagerAdapter;
 import com.rasjdd.udacity.mybakingapp.adapters.StepsListViewAdapter;
 import com.rasjdd.udacity.mybakingapp.fragments.RecipeStepFragment;
+import com.rasjdd.udacity.mybakingapp.models.Ingredient;
 import com.rasjdd.udacity.mybakingapp.models.Recipe;
 import com.rasjdd.udacity.mybakingapp.utilities.Constants;
+import com.rasjdd.udacity.mybakingapp.utilities.DisplayUtilities;
 import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
 
 /**
@@ -39,12 +42,14 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
     private Toolbar mToolBarPaging;
     private TabLayout mTabBarPaging;
     private ViewPager mViewPager;
+    private TextView mTextIngredients;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_list);
+        mTextIngredients = findViewById(R.id.textIngredientList);
 
         mTwoPane = getResources().getBoolean(R.bool.mTwoPane);
 
@@ -57,14 +62,13 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
         mContainerStepsList.setHasFixedSize(true);
         mContainerStepsList.setAdapter(mRecyclerHolderAdapter);
 
-        if (bundle == null || !bundle.containsKey(Constants.keyFullRecipe)){
+        if (bundle == null || !bundle.containsKey(Constants.keyFullRecipe)) {
 
             Toast.makeText(getApplicationContext(),
                     getString(R.string.intent_failed),
                     Toast.LENGTH_LONG).show();
             NavUtils.navigateUpFromSameTask(this);
-        }
-        else {
+        } else {
             mRecipe = (Recipe) bundle.getSerializable(Constants.keyFullRecipe);
         }
 
@@ -74,6 +78,11 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
         }
 
         setTitle(mRecipe.getName());
+
+        for (Ingredient ingredient : mRecipe.getIngredients()) {
+            DisplayUtilities.prettyIngredientView(ingredient, mTextIngredients);
+            mTextIngredients.append("\n");
+        }
 
         mRecyclerHolderAdapter.setStepList(mRecipe.getSteps());
 
@@ -115,7 +124,7 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater= getMenuInflater();
+        MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.recipe_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -123,7 +132,7 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case android.R.id.home:
                 navigateUpTo(new Intent(this, MainActivity.class));
                 return true;
@@ -159,8 +168,8 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
         } else {
 
             Intent intent = new Intent(this, StepDetailActivitySingle.class);
-            intent.putExtra(Constants.keyFullRecipe,mRecipe);
-            intent.putExtra(Constants.keyStepNumber,mStepNumber);
+            intent.putExtra(Constants.keyFullRecipe, mRecipe);
+            intent.putExtra(Constants.keyStepNumber, mStepNumber);
 
             startActivity(intent);
         }

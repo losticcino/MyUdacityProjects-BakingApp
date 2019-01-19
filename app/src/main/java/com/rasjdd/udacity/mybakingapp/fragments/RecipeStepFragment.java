@@ -91,7 +91,7 @@ public class RecipeStepFragment extends Fragment {
 
         if (mStep != null) {
             textView.setText(mStep.getDescription());
-            mVideoUrlString = NetUtils.detectVideoUrl(mStep.getVideoURL(),mStep.getThumbnailURL());
+            mVideoUrlString = NetUtils.detectVideoUrl(mStep.getVideoURL(), mStep.getThumbnailURL());
         }
 
         if (!mVideoUrlString.equals(Constants.InvalidString)) {
@@ -101,7 +101,7 @@ public class RecipeStepFragment extends Fragment {
                 textView.setVisibility(View.GONE);
                 noticeView.setVisibility(View.GONE);
             }
-        } else{
+        } else {
             mPlayerView.setVisibility(View.GONE);
             if ((rotation == 1) || (rotation == 3)) {
                 textView.setVisibility(View.VISIBLE);

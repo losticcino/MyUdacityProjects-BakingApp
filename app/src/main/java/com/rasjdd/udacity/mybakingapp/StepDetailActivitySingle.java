@@ -25,7 +25,7 @@ import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
  * activity is only used on narrow width devices. On tablet-size devices,
  * item details are presented side-by-side with a list of items
  */
-public class StepDetailActivitySingle extends AppCompatActivity implements StepsListViewAdapter.StepListOnClickHandler  {
+public class StepDetailActivitySingle extends AppCompatActivity implements StepsListViewAdapter.StepListOnClickHandler {
     private Recipe mRecipe;
     private int mStepNumber;
     private boolean mFistAccess = true;
@@ -47,14 +47,13 @@ public class StepDetailActivitySingle extends AppCompatActivity implements Steps
         Bundle bundle = getIntent().getExtras();
         setSupportActionBar(mToolBarPaging);
 
-        if (bundle == null || !bundle.containsKey(Constants.keyFullRecipe)){
+        if (bundle == null || !bundle.containsKey(Constants.keyFullRecipe)) {
 
             Toast.makeText(getApplicationContext(),
                     getString(R.string.intent_failed),
                     Toast.LENGTH_LONG).show();
             NavUtils.navigateUpFromSameTask(this);
-        }
-        else {
+        } else {
             mRecipe = (Recipe) bundle.getSerializable(Constants.keyFullRecipe);
         }
 
@@ -100,7 +99,7 @@ public class StepDetailActivitySingle extends AppCompatActivity implements Steps
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater= getMenuInflater();
+        MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.recipe_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -108,7 +107,7 @@ public class StepDetailActivitySingle extends AppCompatActivity implements Steps
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case android.R.id.home:
                 navigateUpTo(new Intent(this, MainActivity.class));
                 return true;

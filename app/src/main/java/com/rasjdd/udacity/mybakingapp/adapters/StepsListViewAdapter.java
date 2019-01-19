@@ -48,10 +48,9 @@ public class StepsListViewAdapter extends RecyclerView.Adapter<StepsListViewAdap
 
     @Override
     public int getItemCount() {
-        if (mSteps == null){
+        if (mSteps == null) {
             return 0;
-        }
-        else {
+        } else {
             return mSteps.size();
         }
     }
