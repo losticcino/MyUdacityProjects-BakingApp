@@ -24,6 +24,9 @@ import com.rasjdd.udacity.mybakingapp.utilities.Constants;
 import com.rasjdd.udacity.mybakingapp.utilities.DisplayUtilities;
 import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
 
+import icepick.Icepick;
+import icepick.State;
+
 /**
  * An activity representing a single Recipe detail screen. This
  * activity is only used on narrow width devices. On tablet-size devices,
@@ -31,10 +34,14 @@ import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
  */
 public class StepDetailActivity extends AppCompatActivity implements StepsListViewAdapter.StepListOnClickHandler {
     private Recipe mRecipe;
-    private int mStepNumber;
+
+    @State int mStepNumber;
+//    private int mStepNumber;
+
     StepsListViewAdapter mRecyclerHolderAdapter;
     private boolean mTwoPane;
     private boolean mFistAccess = true;
+
 
     // Views
     private RecyclerView mContainerStepsList;
@@ -48,12 +55,12 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Icepick.restoreInstanceState(this, savedInstanceState);
         setContentView(R.layout.activity_step_list);
+
         mTextIngredients = findViewById(R.id.textIngredientList);
-
-        mTwoPane = getResources().getBoolean(R.bool.mTwoPane);
-
         mContainerStepsList = findViewById(R.id.containerStepsList);
+        mTwoPane = getResources().getBoolean(R.bool.mTwoPane);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -148,6 +155,7 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
         super.onSaveInstanceState(outState);
         outState.putSerializable(Constants.keyFullRecipe, mRecipe);
         outState.putInt(Constants.keyStepNumber, mStepNumber);
+        Icepick.saveInstanceState(this, outState);
     }
 
     @Override

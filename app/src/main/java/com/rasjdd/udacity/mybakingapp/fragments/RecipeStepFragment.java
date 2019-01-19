@@ -1,12 +1,16 @@
 package com.rasjdd.udacity.mybakingapp.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -19,12 +23,14 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.rasjdd.udacity.mybakingapp.R;
 import com.rasjdd.udacity.mybakingapp.StepDetailActivity;
 import com.rasjdd.udacity.mybakingapp.models.Recipe;
 import com.rasjdd.udacity.mybakingapp.models.Step;
+import com.rasjdd.udacity.mybakingapp.utilities.AppUtilities;
 import com.rasjdd.udacity.mybakingapp.utilities.Constants;
 import com.rasjdd.udacity.mybakingapp.utilities.NetUtils;
 
@@ -62,21 +68,19 @@ public class RecipeStepFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         assert getArguments() != null;
         if (getArguments().containsKey(Constants.keyRecipeStep)) {
             mStep = (Step) getArguments().getSerializable(Constants.keyRecipeStep);
             mVideoTimeStamp = getArguments().getLong(Constants.keyPlayerPosition);
         }
+
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_step_detail, container, false);
-
-//        String[] localizedTitleNames = this.getResources().getStringArray(R.array.step_title_for_localization);
-//        if (mStep.getId() <= localizedTitleNames.length) this.getActivity().setTitle(localizedTitleNames[mStep.getId()]);
-//        else this.getActivity().setTitle(String.valueOf(this.getString(R.string.step)));
 
         mPlayerView = rootView.findViewById(R.id.playerStepVideo);
         TextView textView = rootView.findViewById(R.id.textStepInstructions);
@@ -115,14 +119,35 @@ public class RecipeStepFragment extends Fragment {
         if (mVideoPlayer == null) {
             mVideoPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(context),
                     new DefaultTrackSelector(), new DefaultLoadControl());
+
+            // attach to view
             mPlayerView.setPlayer(mVideoPlayer);
             mVideoPlayer.seekTo(mVideoTimeStamp);
             mPlayerView.setVisibility(View.VISIBLE);
         }
+
         MediaSource mediaSource = new ExtractorMediaSource
                 .Factory(new DefaultHttpDataSourceFactory("UdacityProject - Exoplayer"))
                 .createMediaSource(Uri.parse(videoURL));
+
         mVideoPlayer.prepare(mediaSource, true, false);
+        if (mVideoTimeStamp != 0) mVideoPlayer.seekTo(mVideoTimeStamp);
+
+    }
+
+    private void exitExoPlayer() {
+        if (mVideoPlayer != null) {
+            mVideoTimeStamp = mVideoPlayer.getCurrentPosition();
+
+            mVideoPlayer.stop();
+            mVideoPlayer.release();
+            mVideoPlayer = null;
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
     }
 
     @Override
@@ -144,13 +169,19 @@ public class RecipeStepFragment extends Fragment {
         exitExoPlayer();
     }
 
-    private void exitExoPlayer() {
-        if (mVideoPlayer != null) {
-            mVideoTimeStamp = mVideoPlayer.getCurrentPosition();
+    @Override
+    public void onResume() {
+        super.onResume();
 
-            mVideoPlayer.stop();
-            mVideoPlayer.release();
-            mVideoPlayer = null;
+        String resumeStringUrl = NetUtils.detectThumbnailURL(mStep.getVideoURL(), mStep.getThumbnailURL());
+
+        if ( resumeStringUrl != Constants.InvalidString) {
+            initializeVideoPlayer(resumeStringUrl, getContext());
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

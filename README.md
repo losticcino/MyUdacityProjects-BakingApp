@@ -25,3 +25,42 @@ The JSON file contains the recipes' instructions, ingredients, videos and images
 One of the skills you will demonstrate in this project is how to handle unexpected input in your data -- professional developers often cannot expect polished JSON data when building an app.
 
 Click "Next" to see some sample mocks for the app!
+
+
+####  My notes to reviewer and anyone else looking
+
+Due to real-world issues and submission deadlines, this isn't a 100% perfect example of best work.  If you want better examples, I suggest looking at my followed developers.
+
+## There are problems as a result of some Android Studio weirdness!!!
+
+I literally watched a an icon jump from a v24 to an xxhdpi to the drawable roots by doing gradle syncs.  I have had times where the app will completely ignore breakpoints and times where it will detach from the IDE and continue to work, and times where the app unexpectedly crash for no reason without user input.  Most likely it was the result of running in Ubuntu 18.10, but due to submission deadlines I will address that after project passing. 
+
+## Libraries used:
+
+* Google / Standard
+
+  * Gson for serialization - I personally prefer this for moving POJOs to things like Moshi - just a personal thing
+  
+  * The usual layouts etc.  I do call Exifinterface specifically even though I don't use it, that is because Picasso calls an older version which causes gradle heartburn.
+
+  * Volley for network calls.
+
+* Icepick for persistence.
+
+* Exoplayer for videos.
+
+* Picasso for pictures.
+
+# Other Attribution
+
+I did have help, including from my brother and reviewing other projects.  All of the code in here was typed and changed and done by me or from using the Android templates (Which I do not feel counts as plagiarism since this is an education, not commercial, project.).  When looking to examples I only used and transformed the parts I was comfortable with or understood the what and why.
+
+I had a few other libraries for beautifying recycler usage etc, but eventually stripped them out because of other Android Studio issues I was blaming on the libraries.
+
+
+
+
+## What did I learn?
+
+I feel I really got a good feeling of both fragments and testing.  I am already salivating at the possibilites that can occur from testing.  I also am confident I can use widgets wisely and effectively - although they are MUCH scarier than I originally though.
+

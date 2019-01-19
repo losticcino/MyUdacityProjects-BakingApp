@@ -20,6 +20,8 @@ import com.rasjdd.udacity.mybakingapp.models.Recipe;
 import com.rasjdd.udacity.mybakingapp.utilities.Constants;
 import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
 
+import icepick.Icepick;
+
 /**
  * An activity representing a single Recipe detail screen. This
  * activity is only used on narrow width devices. On tablet-size devices,
@@ -37,6 +39,7 @@ public class StepDetailActivitySingle extends AppCompatActivity implements Steps
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Icepick.restoreInstanceState(this, savedInstanceState);
         setContentView(R.layout.activity_step_detail);
 
 
@@ -123,6 +126,7 @@ public class StepDetailActivitySingle extends AppCompatActivity implements Steps
         super.onSaveInstanceState(outState);
         outState.putSerializable(Constants.keyFullRecipe, mRecipe);
         outState.putInt(Constants.keyStepNumber, mStepNumber);
+        Icepick.saveInstanceState(this, outState);
     }
 
     @Override
