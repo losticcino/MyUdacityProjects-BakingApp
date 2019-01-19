@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_rectangle"
+    android:padding="@dimen/widget_margin"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/widget_textHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:padding="8dp"
+        android:paddingEnd="36dp"
+        android:textColor="@color/textDark"
+        android:textSize="18sp"
+        android:textStyle="bold|italic" />
+
+    <ListView
+        android:id="@+id/widget_containerIngredientList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="0dp"
+        android:layout_weight="1"
+        android:divider="@color/colorPrimary"
+        android:dividerHeight="1dp"
+        android:padding="4dp"
+        android:fadeScrollbars="false" />
+
+</LinearLayout>

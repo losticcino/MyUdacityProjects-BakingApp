@@ -1,4 +1,60 @@
 <resources>
     <string name="app_name">My Baking App</string>
     <string name="title_recipe_detail">Recipe Detail</string>
+    <string name="place_holder">place holder</string>
+    <string name="servings_tag">Serves</string>
+    <string name="step">Step</string>
+    <string name="previous_step_button"><![CDATA[< Back Step]]></string>
+    <string name="next_step_button"><![CDATA[Next Step >]]></string>
+    <string name="intent_failed">A Data Error Occurred</string>
+    <string name="widget_updated">Widget Updated</string>
+    <string name="step_detail_no_video">There is no video for this step.</string>
+    <string name="introduction">Introduction</string>
+    <string name="loading_data">Loading Information.</string>
+
+    <!--Step Number for app title and localization-->
+    <string-array name="step_title_for_localization">
+        <item>Introduction</item>
+        <item>Step One</item>
+        <item>Step Two</item>
+        <item>Step Three</item>
+        <item>Step Four</item>
+        <item>Step Five</item>
+        <item>Step Six</item>
+        <item>Step Seven</item>
+        <item>Step Eight</item>
+        <item>Step Nine</item>
+        <item>Step Ten</item>
+        <item>Step Eleven</item>
+        <item>Step Twelve</item>
+        <item>Step Thirteen</item>
+        <item>Step Fourteen</item>
+        <item>Step Fifteen</item>
+        <item>Step Sixteen</item>
+        <item>Step Seventeen</item>
+        <item>Step Eighteen</item>
+        <item>Step Nineteen</item>
+        <item>Step Twenty</item>
+        <item>Step Twenty-One</item>
+        <item>Step Twenty-Two</item>
+        <item>Step Twenty-Three</item>
+        <item>Step Twenty-Four</item>
+        <item>Step Twenty-Five</item>
+        <item>Step Twenty-Six</item>
+        <item>Step Twenty-Seven</item>
+        <item>Step Twenty-Eight</item>
+        <item>Step Twenty-Nine</item>
+        <item>Step Thirty</item>
+    </string-array>
+
+    <!--Widget Strings-->
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="appwidget_ingredient_text">Ingredient List</string>
+    <string name="appwidget_header_text">Recipe</string>
+    <string name="send_to_widget">Send to Widget</string>
+    <string name="title_step_detail">Step Details</string>
+    <string name="title_step_detail_single">Single Window Step Details</string>
+    <string name="text_ingredient_list">Ingredients</string>
+
 </resources>
