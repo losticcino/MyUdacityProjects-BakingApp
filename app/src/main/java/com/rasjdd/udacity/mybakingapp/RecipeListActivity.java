@@ -44,7 +44,7 @@
 //    private ArrayList<Recipe> mRecipeList;
 //    private RequestQueue mRequestQueue;
 //    private Gson gRecipeList;
-////    private RecipeListViewAdapter mViewAdapter;
+//    private RecipeListViewAdapter mViewAdapter;
 //    private RecyclerView recyclerView;
 //
 //    @Override

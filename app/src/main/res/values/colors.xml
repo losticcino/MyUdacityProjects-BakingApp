@@ -9,4 +9,9 @@
     <color name="textLight">#ffffff</color>
     <color name="textDark">#000000</color>
     <color name="colorAccent">#ffe0b2</color>
+    <color name="colorThreePrimary">#385F71</color>
+    <color name="colorThreePrimaryDark">#2B4162</color>
+    <color name="colorThreeAccent">#F5F0F6</color>
+    <color name="textThreeDark">#8F754F</color>
+    <color name="textThreeLight">#D7B377</color>
 </resources>

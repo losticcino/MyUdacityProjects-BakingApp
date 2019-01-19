@@ -10,15 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rasjdd.udacity.mybakingapp.R;
-import com.rasjdd.udacity.mybakingapp.models.Recipe;
-import com.rasjdd.udacity.mybakingapp.utilities.NetUtils;
-import com.squareup.picasso.Picasso;
+import com.rasjdd.udacity.mybakingapp.models.Step;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class StepsListViewAdapter extends RecyclerView.Adapter<StepsListViewAdapter.StepsListViewHolder> {
     private final StepListOnClickHandler mClickHandler;
-    private ArrayList<Recipe> mRecipes;
+    private List<Step> mSteps;
     private Resources resources;
 
     public StepsListViewAdapter(StepListOnClickHandler clickHandler) {
@@ -28,73 +29,65 @@ public class StepsListViewAdapter extends RecyclerView.Adapter<StepsListViewAdap
     @NonNull
     @Override
     public StepsListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        if (mRecipes == null) mRecipes= new ArrayList<>();
+        if (mSteps == null) mSteps = new ArrayList<>();
         resources = viewGroup.getResources();
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.recipe_card, viewGroup, false);
+                .inflate(R.layout.step_card, viewGroup, false);
         return new StepsListViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull StepsListViewHolder stepsListViewHolder, int i) {
-        Recipe recipe = mRecipes.get(i);
+        Step step = mSteps.get(i);
+        String s;
 
-        stepsListViewHolder.mNameView.setText(recipe.getName());
+        stepsListViewHolder.mNameView.setText(step.getShortDescription());
 
-        String s = resources.getString(R.string.servings_tag) + ": "+ String.valueOf((int) recipe.getServings());
+        if (step.getId() == 0) s = String.valueOf(resources.getString(R.string.intoduction));
+        else s = String.valueOf(step.getId());
+        s = String.valueOf(resources.getString(R.string.step)) + ": " + s;
         stepsListViewHolder.mDetailView.setText(s);
-
-        if (NetUtils.isGraphicFileformat(recipe.getImage())) {
-            Picasso.get()
-                    .load(recipe.getImage())
-                    .placeholder(R.drawable.bread_icon)
-                    .into(stepsListViewHolder.mImagePreview);
-        } else {
-            stepsListViewHolder.mImagePreview.setImageResource(R.drawable.bread_icon);
-        }
     }
 
     @Override
     public int getItemCount() {
-        if (mRecipes == null){
+        if (mSteps == null){
             return 0;
         }
         else {
-            return mRecipes.size();
+            return mSteps.size();
         }
     }
 
     public interface StepListOnClickHandler {
-        void onStepClick(Recipe recipe);
+        void onStepClick(int id);
     }
 
     public class StepsListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final TextView mNameView;
         final TextView mDetailView;
-        final ImageView mImagePreview;
 
         StepsListViewHolder(@NonNull View itemView) {
             super(itemView);
-            mNameView = (TextView) itemView.findViewById(R.id.textRecipeCardName);
-            mDetailView = (TextView) itemView.findViewById(R.id.textRecipeCardDetails);
-            mImagePreview = (ImageView) itemView.findViewById(R.id.imageRecipeCardPreview);
+            mNameView = (TextView) itemView.findViewById(R.id.textStepCardName);
+            mDetailView = (TextView) itemView.findViewById(R.id.textStepCardDetails);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            Recipe recipe = mRecipes.get(getAdapterPosition());
-            mClickHandler.onStepClick(recipe);
+            int id = mSteps.get(getAdapterPosition()).getId();
+            mClickHandler.onStepClick(id);
         }
     }
 
-    public void setRecipeList(ArrayList<Recipe> recipes) {
-        mRecipes = recipes;
+    public void setStepList(List<Step> steps) {
+        mSteps = steps;
         notifyDataSetChanged();
     }
 
-    public void addStepToList(Recipe recipe) {
-        mRecipes.add(recipe);
+    public void addStepToList(Step step) {
+        mSteps.add(step);
         notifyDataSetChanged();
     }
 }

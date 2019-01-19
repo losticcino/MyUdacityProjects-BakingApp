@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
-        tools:context="com.bfirestone.udacity.cookbook.ui.activities.RecipeStepDetailActivity"
+        tools:context=".StepDetailActivity"
         tools:ignore="MergeRootFrame">
 
         <android.support.design.widget.AppBarLayout

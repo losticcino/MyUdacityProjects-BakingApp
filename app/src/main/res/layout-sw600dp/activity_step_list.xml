@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<layout>-->
+<layout>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,8 +11,7 @@
         android:baselineAligned="false"
         android:divider="?android:attr/dividerHorizontal"
         android:orientation="horizontal"
-        android:showDividers="middle"
-        tools:context=".RecipeListActivity">
+        android:showDividers="middle">
 
         <!--
         This layout is a two-pane layout for the RecipeList
@@ -39,4 +38,4 @@
             android:layout_weight="3" />
 
     </LinearLayout>
-<!--</layout>-->
+</layout>

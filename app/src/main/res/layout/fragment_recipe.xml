@@ -18,6 +18,8 @@
         android:id="@+id/containerRecipeListFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="0dp"
+        app:layoutManager="android.support.v7.widget.GridLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/progressRecipeListFragment"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

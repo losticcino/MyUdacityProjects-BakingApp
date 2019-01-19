@@ -14,6 +14,8 @@ public class Constants {
     public static final String keyAppPreferences = "550186ed-5a4e-4628-9e59-b030b5e3a0e2";
     public static final String keyWidgetRecipe = "ec798ff8-f814-4a11-b76b-eac6f53860a7";
     public static final String keyRecipeStep = "2e167354-eaa4-4b95-a1e7-7c3c804a8ccd";
+    public static final String keyLayoutMode = "07aafd11-f1be-4031-b193-3a87cf8d03ed";
+    public static final String keyStepNumber = "dbe97155-803c-4ff8-8829-6298485a4610";
 
     // Safe Null Values
     public static final String InvalidString = "This is a constant-defined null string." +
@@ -21,8 +23,6 @@ public class Constants {
 
     /* Available Pre-generated UUIDs
 
-    07aafd11-f1be-4031-b193-3a87cf8d03ed
-    dbe97155-803c-4ff8-8829-6298485a4610
     9a180f45-16db-4fab-8ea3-c7db1e4bb800
     7dec895f-2a04-4fe7-b53c-03cc96fb9258
     c871a804-2067-425a-a19b-ec35865d5c63

@@ -27,7 +27,7 @@ import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
  * activity is only used on narrow width devices. On tablet-size devices,
  * item details are presented side-by-side with a list of items
  */
-public class StepDetailActivity extends AppCompatActivity implements StepsListViewAdapter.StepListOnClickHandler {
+public class StepDetailActivitySingle extends AppCompatActivity {
     private Recipe mRecipe;
     private int mStepNumber;
     ActivityStepDetailBinding mDetailBinding;
@@ -46,11 +46,6 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
         Toolbar toolbar = mDetailBinding.toolbarRecipeStepsPhone;
         setSupportActionBar(toolbar);
 
-        // init recycler
-        mRecyclerHolderAdapter = new StepsListViewAdapter(this::onStepClick);
-        mListBinding.containerRecipeList.setHasFixedSize(true);
-        mListBinding.containerRecipeList.setAdapter(mRecyclerHolderAdapter);
-
         if (bundle == null || !bundle.containsKey(Constants.keyFullRecipe)){
 
             Toast.makeText(getApplicationContext(),
@@ -59,12 +54,7 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
             NavUtils.navigateUpFromSameTask(this);
         }
 
-        if (bundle.containsKey(Constants.keyLayoutMode)) {
-            mTwoPane = bundle.getBoolean(Constants.keyLayoutMode);
-        }
-        else if (mListBinding.containerRecipeStepsWide != null) {
-            mTwoPane = true;
-        }
+        if (bundle.containsKey(Constants.keyLayoutMode)) mTwoPane = bundle.getBoolean(Constants.keyLayoutMode);
         if (bundle.containsKey(Constants.keyFullRecipe)) mRecipe = (Recipe) bundle.getSerializable(Constants.keyFullRecipe);
         if (mFistAccess) {
             mStepNumber = bundle.getInt(Constants.keyStepNumber, 0);
@@ -136,28 +126,5 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
         super.onSaveInstanceState(outState);
         outState.putSerializable(Constants.keyFullRecipe, mRecipe);
         outState.putInt(Constants.keyStepNumber, mStepNumber);
-    }
-
-    @Override
-    public void onStepClick(int id) {
-        this.mStepNumber = id;
-        mDetailBinding.viewsRecipeSteps.setCurrentItem(mStepNumber);
-
-        if (mTwoPane) {
-            Bundle arguments = new Bundle();
-            arguments.putSerializable(Constants.keyRecipeStep, mRecipe.getSteps().get(mStepNumber));
-            RecipeStepFragment fragment = new RecipeStepFragment();
-            fragment.setArguments(arguments);
-            this.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.containerRecipeStepsWide, fragment)
-                    .commit();
-        } else {
-
-            Intent intent = new Intent(this, StepDetailActivitySingle.class);
-            intent.putExtra(Constants.keyFullRecipe,mRecipe);
-            intent.putExtra(Constants.keyStepNumber,mStepNumber);
-
-            startActivity(intent);
-        }
     }
 }

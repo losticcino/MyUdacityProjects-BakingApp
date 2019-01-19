@@ -7,7 +7,9 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +25,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rasjdd.udacity.mybakingapp.AppSupervisor;
+import com.rasjdd.udacity.mybakingapp.MainActivity;
 import com.rasjdd.udacity.mybakingapp.R;
 import com.rasjdd.udacity.mybakingapp.StepDetailActivity;
 import com.rasjdd.udacity.mybakingapp.adapters.RecipeListAdapter;
@@ -52,6 +55,7 @@ public class RecipeListFragment extends Fragment {
     private Boolean mLoading;
     private AppSupervisor appSupervisor;
     private boolean mTwoPane;
+    private GridLayoutManager mGridManager;
 
     //Declare views
     private RecyclerView mRecycler;
@@ -81,22 +85,41 @@ public class RecipeListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        mAdapter = new RecipeListAdapter(this,mClickListener);
 
         if (mRecipes == null) mRecipes = new ArrayList<>();
 
-        if (mRequestQueue == null) mRequestQueue = Volley.newRequestQueue(getContext());
+        if (mRequestQueue == null) mRequestQueue = Volley.newRequestQueue(this.getContext());
 
-//        if (getArguments().containsKey(Constants.keyFullRecipe)) {
-//            mRecipe = (Recipe) getArguments().getSerializable(Constants.keyFullRecipe);
+        mAdapter = new RecipeListAdapter(getActivity().getApplicationContext(),
+                position -> mClickListener.onRecipeSelected(mRecipes.get(position)));
+
+//        if (getArguments().containsKey(Constants.keyRecipeList)) {
+//            Recipe[] recipes = (Recipe[]) getArguments().getSerializable(Constants.keyRecipeList);
+//            mLoading = false;
 //        }
+
+        getRecipeList(this.getContext());
+        mLoading = true;
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_recipe, container, false);
-        mRecycler = rootView.findViewById(R.id.containerRecipeList);
+        mRecycler = rootView.findViewById(R.id.containerRecipeListFragment);
         mRecycler.setHasFixedSize(true);
+        mGridManager = (GridLayoutManager) mRecycler.getLayoutManager();
+
+        mRecycler.setAdapter(mAdapter);
+
+        if (rootView.findViewById(R.id.containerRecipeStepsWide) != null) {
+            mTwoPane = true;
+            MainActivity.mTwoPane = true;
+        }
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        mGridManager.setSpanCount(metrics.widthPixels / 800);
 
 //        mAdapter = new RecipeListAdapter(this.getContext(), mClickListener);
 
@@ -113,9 +136,6 @@ public class RecipeListFragment extends Fragment {
 //        }
 
         // Test for Two-Pane mode
-        if (rootView.findViewById(R.id.containerRecipeStepsWide) != null) {
-            mTwoPane = true;
-        }
 
         // Idler for test
         if (getActivity() != null) {

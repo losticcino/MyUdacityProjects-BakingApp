@@ -13,5 +13,4 @@
     android:paddingEnd="8dp"
     android:background="@color/colorSecondaryDark"
     app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-    tools:context=".RecipeListActivity"
     tools:listitem="@layout/recipe_list_content" />
