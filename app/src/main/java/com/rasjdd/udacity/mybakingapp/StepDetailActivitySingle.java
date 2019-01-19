@@ -1,7 +1,6 @@
 package com.rasjdd.udacity.mybakingapp;
 
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
@@ -16,8 +15,6 @@ import android.widget.Toast;
 
 import com.rasjdd.udacity.mybakingapp.adapters.StepsFragmentPagerAdapter;
 import com.rasjdd.udacity.mybakingapp.adapters.StepsListViewAdapter;
-import com.rasjdd.udacity.mybakingapp.databinding.ActivityStepDetailBinding;
-import com.rasjdd.udacity.mybakingapp.databinding.ActivityStepListBinding;
 import com.rasjdd.udacity.mybakingapp.fragments.RecipeStepFragment;
 import com.rasjdd.udacity.mybakingapp.models.Recipe;
 import com.rasjdd.udacity.mybakingapp.utilities.Constants;
@@ -28,7 +25,7 @@ import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
  * activity is only used on narrow width devices. On tablet-size devices,
  * item details are presented side-by-side with a list of items
  */
-public class StepDetailActivitySingle extends AppCompatActivity {
+public class StepDetailActivitySingle extends AppCompatActivity implements StepsListViewAdapter.StepListOnClickHandler  {
     private Recipe mRecipe;
     private int mStepNumber;
     private boolean mFistAccess = true;
@@ -40,7 +37,7 @@ public class StepDetailActivitySingle extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_step_list);
+        setContentView(R.layout.activity_step_detail);
 
 
         mToolBarPaging = findViewById(R.id.toolbarRecipeStepsPhone);
@@ -127,5 +124,20 @@ public class StepDetailActivitySingle extends AppCompatActivity {
         super.onSaveInstanceState(outState);
         outState.putSerializable(Constants.keyFullRecipe, mRecipe);
         outState.putInt(Constants.keyStepNumber, mStepNumber);
+    }
+
+    @Override
+    public void onStepClick(int id) {
+        this.mStepNumber = id;
+
+        mViewPager.setCurrentItem(mStepNumber);
+
+        Bundle arguments = new Bundle();
+        arguments.putSerializable(Constants.keyRecipeStep, mRecipe.getSteps().get(mStepNumber));
+        RecipeStepFragment fragment = new RecipeStepFragment();
+        fragment.setArguments(arguments);
+        this.getSupportFragmentManager().beginTransaction()
+                .replace(R.id.containerStepsFragmentWide, fragment)
+                .commit();
     }
 }

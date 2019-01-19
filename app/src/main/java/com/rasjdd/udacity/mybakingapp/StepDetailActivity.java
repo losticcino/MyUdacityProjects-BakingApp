@@ -12,18 +12,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.rasjdd.udacity.mybakingapp.adapters.StepsFragmentPagerAdapter;
 import com.rasjdd.udacity.mybakingapp.adapters.StepsListViewAdapter;
 import com.rasjdd.udacity.mybakingapp.fragments.RecipeStepFragment;
 import com.rasjdd.udacity.mybakingapp.models.Recipe;
 import com.rasjdd.udacity.mybakingapp.utilities.Constants;
 import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
-
-import org.w3c.dom.Text;
 
 /**
  * An activity representing a single Recipe detail screen. This
@@ -33,8 +29,6 @@ import org.w3c.dom.Text;
 public class StepDetailActivity extends AppCompatActivity implements StepsListViewAdapter.StepListOnClickHandler {
     private Recipe mRecipe;
     private int mStepNumber;
-//    ActivityStepDetailBinding mDetailBinding;
-//    ActivityStepListBinding mListBinding;
     StepsListViewAdapter mRecyclerHolderAdapter;
     private boolean mTwoPane;
     private boolean mFistAccess = true;
@@ -50,19 +44,13 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_step_list);
+        setContentView(R.layout.activity_step_list);
+
+        mTwoPane = getResources().getBoolean(R.bool.mTwoPane);
 
         mContainerStepsList = findViewById(R.id.containerStepsList);
-        mContainerDetailView = findViewById(R.id.containerStepsFragmentWide);
-        mToolBarPaging = findViewById(R.id.toolbarRecipeStepsPhone);
-        mTabBarPaging = findViewById(R.id.tabsRecipeSteps);
-        mViewPager = findViewById(R.id.viewsRecipeSteps);
-        Bundle bundle = getIntent().getExtras();
 
-//        String s = String.valueOf(getTitle());
-//        setTitle(mRecipe.getName().toCharArray());
-//        Toolbar toolbar = mDetailBinding.toolbarRecipeStepsPhone;
-//        setSupportActionBar(toolbar);
+        Bundle bundle = getIntent().getExtras();
 
         // init recycler
         mRecyclerHolderAdapter = new StepsListViewAdapter(this::onStepClick);
@@ -76,30 +64,27 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
                     Toast.LENGTH_LONG).show();
             NavUtils.navigateUpFromSameTask(this);
         }
+        else {
+            mRecipe = (Recipe) bundle.getSerializable(Constants.keyFullRecipe);
+        }
 
-        if (bundle.containsKey(Constants.keyLayoutMode)) {
-            mTwoPane = bundle.getBoolean(Constants.keyLayoutMode);
-        }
-        else if (findViewById(R.id.containerStepsFragmentWide) != null) {
-            mTwoPane = true;
-        }
-        if (bundle.containsKey(Constants.keyFullRecipe)) mRecipe = (Recipe) bundle.getSerializable(Constants.keyFullRecipe);
         if (mFistAccess) {
             mStepNumber = bundle.getInt(Constants.keyStepNumber, 0);
             mFistAccess = false;
         }
 
+        setTitle(mRecipe.getName());
+
         mRecyclerHolderAdapter.setStepList(mRecipe.getSteps());
 
-        // Show the Up button in the action bar.
-//        ActionBar actionBar = getSupportActionBar();
-//        if (actionBar != null) {
-//            actionBar.setTitle(mRecipe.getName());
-//            actionBar.setDisplayHomeAsUpEnabled(true);
-//            actionBar.setHideOffset(0);
-//        }
 
         if (mTwoPane) {
+
+            mContainerDetailView = findViewById(R.id.containerStepsFragmentWide);
+            mToolBarPaging = findViewById(R.id.toolbarRecipeStepsPhone);
+            mTabBarPaging = findViewById(R.id.tabsRecipeSteps);
+            mViewPager = findViewById(R.id.viewsRecipeSteps);
+
             // ---------- Fragment Pager for the Step Details Views ---------
 
             StepsFragmentPagerAdapter pagerAdapter = new StepsFragmentPagerAdapter(getApplicationContext(),
@@ -159,9 +144,11 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
     @Override
     public void onStepClick(int id) {
         this.mStepNumber = id;
-        mViewPager.setCurrentItem(mStepNumber);
 
         if (mTwoPane) {
+
+            mViewPager.setCurrentItem(mStepNumber);
+
             Bundle arguments = new Bundle();
             arguments.putSerializable(Constants.keyRecipeStep, mRecipe.getSteps().get(mStepNumber));
             RecipeStepFragment fragment = new RecipeStepFragment();

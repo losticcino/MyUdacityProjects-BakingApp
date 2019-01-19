@@ -2,13 +2,11 @@ package com.rasjdd.udacity.mybakingapp.utilities;
 
 import android.graphics.Typeface;
 import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
 import android.widget.TextView;
 
 import com.rasjdd.udacity.mybakingapp.models.Ingredient;
-import com.rasjdd.udacity.mybakingapp.models.Step;
 
 public class DisplayUtilities {
 
