@@ -1,5 +1,6 @@
 package com.rasjdd.udacity.mybakingapp;
 
+import android.app.Application;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.rasjdd.udacity.mybakingapp.adapters.StepsFragmentPagerAdapter;
@@ -62,7 +64,7 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
         if (bundle.containsKey(Constants.keyLayoutMode)) {
             mTwoPane = bundle.getBoolean(Constants.keyLayoutMode);
         }
-        else if (mListBinding.containerRecipeStepsWide != null) {
+        else if (findViewById(R.id.containerRecipeStepsWide) != null) {
             mTwoPane = true;
         }
         if (bundle.containsKey(Constants.keyFullRecipe)) mRecipe = (Recipe) bundle.getSerializable(Constants.keyFullRecipe);
@@ -74,12 +76,12 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
         mRecyclerHolderAdapter.setStepList(mRecipe.getSteps());
 
         // Show the Up button in the action bar.
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setTitle(mRecipe.getName());
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHideOffset(0);
-        }
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar != null) {
+//            actionBar.setTitle(mRecipe.getName());
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//            actionBar.setHideOffset(0);
+//        }
 
         if (mTwoPane) {
             // ---------- Fragment Pager for the Step Details Views ---------
@@ -96,7 +98,7 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
 
                 @Override
                 public void onPageSelected(int i) {
-                    actionBar.setTitle(mRecipe.getSteps().get(i).getShortDescription());
+                    setTitle(mRecipe.getSteps().get(i).getShortDescription());
                     mStepNumber = i;
                 }
 

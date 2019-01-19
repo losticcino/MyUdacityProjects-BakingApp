@@ -12,15 +12,20 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
     <TextView
         android:id="@+id/textNoVideoNotice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="6dp"
-        android:text="@string/step_detal_no_video"
+        android:text="@string/step_detail_no_video"
         android:gravity="center"
         android:visibility="gone"
-        style="@style/DefaultTextStyle" />
+        style="@style/DefaultTextStyle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/containerStepsInformation" />
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/containerStepsInformation"

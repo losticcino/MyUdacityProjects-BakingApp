@@ -6,13 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rasjdd.udacity.mybakingapp.R;
 import com.rasjdd.udacity.mybakingapp.models.Step;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +40,7 @@ public class StepsListViewAdapter extends RecyclerView.Adapter<StepsListViewAdap
 
         stepsListViewHolder.mNameView.setText(step.getShortDescription());
 
-        if (step.getId() == 0) s = String.valueOf(resources.getString(R.string.intoduction));
+        if (step.getId() == 0) s = String.valueOf(resources.getString(R.string.introduction));
         else s = String.valueOf(step.getId());
         s = String.valueOf(resources.getString(R.string.step)) + ": " + s;
         stepsListViewHolder.mDetailView.setText(s);
