@@ -5,9 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -20,7 +22,6 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.rasjdd.udacity.mybakingapp.R;
-import com.rasjdd.udacity.mybakingapp.RecipeListActivity;
 import com.rasjdd.udacity.mybakingapp.StepDetailActivity;
 import com.rasjdd.udacity.mybakingapp.models.Recipe;
 import com.rasjdd.udacity.mybakingapp.models.Step;
@@ -29,7 +30,6 @@ import com.rasjdd.udacity.mybakingapp.utilities.NetUtils;
 
 /**
  * A fragment representing a single Recipe detail screen.
- * This fragment is either contained in a {@link RecipeListActivity}
  * in two-pane mode (on tablets) or a {@link StepDetailActivity}
  * on handsets.
  */
@@ -62,6 +62,7 @@ public class RecipeStepFragment extends Fragment {
 
         if (getArguments().containsKey(Constants.keyRecipeStep)) {
             mStep = (Step) getArguments().getSerializable(Constants.keyRecipeStep);
+            mVideoTimeStamp = getArguments().getLong(Constants.keyPlayerPosition);
         }
     }
 
@@ -76,6 +77,10 @@ public class RecipeStepFragment extends Fragment {
 
         mPlayerView = rootView.findViewById(R.id.playerStepVideo);
         TextView textView = rootView.findViewById(R.id.textStepInstructions);
+        TextView noticeView = rootView.findViewById(R.id.textNoVideoNotice);
+
+        Display display = ((WindowManager) this.getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        int rotation = display.getRotation();
 
         if (savedInstanceState != null && savedInstanceState.containsKey(Constants.keyPlayerPosition)) {
             mVideoTimeStamp = savedInstanceState.getLong(Constants.keyPlayerPosition, 0);
@@ -89,8 +94,16 @@ public class RecipeStepFragment extends Fragment {
         if (!mVideoUrlString.equals(Constants.InvalidString)) {
             mPlayerView.setVisibility(View.VISIBLE);
             initializeVideoPlayer(mVideoUrlString, this.getContext());
+            if ((rotation == 1) || (rotation == 3)) {
+                textView.setVisibility(View.GONE);
+                noticeView.setVisibility(View.GONE);
+            }
         } else{
             mPlayerView.setVisibility(View.GONE);
+            if ((rotation == 1) || (rotation == 3)) {
+                textView.setVisibility(View.VISIBLE);
+                noticeView.setVisibility(View.VISIBLE);
+            }
         }
         return rootView;
     }
@@ -112,13 +125,29 @@ public class RecipeStepFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-
         outState.putLong(Constants.keyPlayerPosition, mVideoPlayer.getContentPosition());
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        exitExoPlayer();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mVideoPlayer.release();
+        exitExoPlayer();
+    }
+
+    private void exitExoPlayer() {
+        if (mVideoPlayer != null) {
+            mVideoTimeStamp = mVideoPlayer.getCurrentPosition();
+
+            mVideoPlayer.stop();
+            mVideoPlayer.release();
+            mVideoPlayer = null;
+        }
     }
 }

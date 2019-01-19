@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -13,6 +12,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+    <TextView
+        android:id="@+id/textNoVideoNotice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:text="@string/step_detal_no_video"
+        android:gravity="center"
+        android:visibility="gone"
+        style="@style/DefaultTextStyle" />
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/containerStepsInformation"
@@ -22,11 +30,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
+
         <TextView
             android:id="@+id/textStepInstructions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp" />
+            android:layout_margin="6dp"
+            style="@style/DefaultTextStyle" />
     </android.support.v4.widget.NestedScrollView>
 
 

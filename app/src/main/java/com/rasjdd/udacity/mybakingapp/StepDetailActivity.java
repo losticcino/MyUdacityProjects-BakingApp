@@ -23,7 +23,6 @@ import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
  * An activity representing a single Recipe detail screen. This
  * activity is only used on narrow width devices. On tablet-size devices,
  * item details are presented side-by-side with a list of items
- * in a {@link RecipeListActivity}.
  */
 public class StepDetailActivity extends AppCompatActivity {
     private Recipe mRecipe;
@@ -35,23 +34,22 @@ public class StepDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_detail);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_step_detail);
+        Bundle bundle = getIntent().getExtras();
 
         // Set Toolbar
         Toolbar toolbar = mBinding.toolbarRecipeStepsPhone;
         setSupportActionBar(toolbar);
 
-        setSupportActionBar(toolbar);
-        Intent parentIntent = getIntent();
+        if (bundle == null || !bundle.containsKey(Constants.keyFullRecipe)){
 
-        if (parentIntent == null){
             Toast.makeText(getApplicationContext(),
                     getString(R.string.intent_failed),
                     Toast.LENGTH_LONG).show();
             NavUtils.navigateUpFromSameTask(this);
         }
 
-        mRecipe = (Recipe) parentIntent.getSerializableExtra(Constants.keyFullRecipe);
-        mStep = parentIntent.getExtras().getInt(Constants.keyRecipeStep, 0);
+        mRecipe = (Recipe) bundle.getSerializable(Constants.keyFullRecipe);
+        mStep = bundle.getInt(Constants.keyRecipeStep, 0);
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
@@ -74,6 +72,7 @@ public class StepDetailActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int i) {
                 actionBar.setTitle(mRecipe.getSteps().get(i).getShortDescription());
+                mStep = i;
             }
 
             @Override
@@ -98,7 +97,7 @@ public class StepDetailActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id){
             case android.R.id.home:
-                navigateUpTo(new Intent(this, RecipeListActivity.class));
+                navigateUpTo(new Intent(this, MainActivity.class));
                 return true;
             case R.id.actionSendToWidget:
                 IngredientListWidgetService.updateWidget(this, mRecipe);
@@ -107,4 +106,10 @@ public class StepDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(Constants.keyFullRecipe, mRecipe);
+        outState.putInt(Constants.keyRecipeStep,mStep);
+    }
 }

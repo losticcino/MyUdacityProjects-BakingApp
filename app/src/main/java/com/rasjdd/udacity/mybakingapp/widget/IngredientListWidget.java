@@ -7,9 +7,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.rasjdd.udacity.mybakingapp.models.Recipe;
+import com.rasjdd.udacity.mybakingapp.MainActivity;
 import com.rasjdd.udacity.mybakingapp.R;
-import com.rasjdd.udacity.mybakingapp.RecipeListActivity;
+import com.rasjdd.udacity.mybakingapp.models.Recipe;
 import com.rasjdd.udacity.mybakingapp.utilities.AppUtilities;
 
 /**
@@ -24,7 +24,7 @@ public class IngredientListWidget extends AppWidgetProvider {
         // If there's data,
         if (recipe != null) {
             // Do stuff
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, RecipeListActivity.class), 0);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.ingredients_widget);
 
             // Set header and listen for a click to launch the app

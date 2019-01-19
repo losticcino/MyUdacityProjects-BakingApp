@@ -50,5 +50,8 @@
     <string name="send_to_widget">Send to Widget</string>
     <string name="intent_failed">A Data Error Occurred</string>
     <string name="widget_updated">Widget Updated</string>
+    <string name="step_detal_no_video">There is no video for this step.</string>
+    <string name="intoduction">Introduction</string>
+    <string name="loading_data">Loading Information.</string>
 
 </resources>
