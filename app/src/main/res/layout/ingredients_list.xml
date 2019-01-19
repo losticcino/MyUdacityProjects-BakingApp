@@ -33,7 +33,7 @@
         android:layout_marginBottom="12dp"
         android:textColor="@android:color/white"
         android:textSize="30dp"
-        tools:text="@string/tv_text_ingredient_list" />
+        tools:text="@string/text_ingredient_list" />
 </android.support.v7.widget.CardView>
 
 <TextView
@@ -41,8 +41,8 @@ android:id="@+id/title_text"
 android:layout_width="wrap_content"
 android:layout_height="wrap_content"
 android:layout_marginTop="8dp"
-android:background="@drawable/round_tv"
-android:paddingStart="@dimen/margin_extra_large"
+android:background="@color/colorPrimaryLight"
+android:paddingStart="24dp"
 android:paddingTop="8dp"
 android:paddingEnd="12dp"
 android:paddingBottom="6dp"
