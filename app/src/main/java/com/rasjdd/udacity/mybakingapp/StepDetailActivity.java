@@ -45,8 +45,8 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
         mDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_step_detail);
         mListBinding = DataBindingUtil.setContentView(this, R.layout.activity_step_list);
         Bundle bundle = getIntent().getExtras();
-        Toolbar toolbar = mDetailBinding.toolbarRecipeStepsPhone;
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = mDetailBinding.toolbarRecipeStepsPhone;
+//        setSupportActionBar(toolbar);
 
         // init recycler
         mRecyclerHolderAdapter = new StepsListViewAdapter(this::onStepClick);
