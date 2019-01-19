@@ -1,28 +1,29 @@
 package com.rasjdd.udacity.mybakingapp;
 
-import android.app.Application;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.rasjdd.udacity.mybakingapp.adapters.StepsFragmentPagerAdapter;
 import com.rasjdd.udacity.mybakingapp.adapters.StepsListViewAdapter;
-import com.rasjdd.udacity.mybakingapp.databinding.ActivityStepDetailBinding;
-import com.rasjdd.udacity.mybakingapp.databinding.ActivityStepListBinding;
 import com.rasjdd.udacity.mybakingapp.fragments.RecipeStepFragment;
 import com.rasjdd.udacity.mybakingapp.models.Recipe;
 import com.rasjdd.udacity.mybakingapp.utilities.Constants;
 import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
+
+import org.w3c.dom.Text;
 
 /**
  * An activity representing a single Recipe detail screen. This
@@ -32,26 +33,41 @@ import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
 public class StepDetailActivity extends AppCompatActivity implements StepsListViewAdapter.StepListOnClickHandler {
     private Recipe mRecipe;
     private int mStepNumber;
-    ActivityStepDetailBinding mDetailBinding;
-    ActivityStepListBinding mListBinding;
+//    ActivityStepDetailBinding mDetailBinding;
+//    ActivityStepListBinding mListBinding;
     StepsListViewAdapter mRecyclerHolderAdapter;
     private boolean mTwoPane;
     private boolean mFistAccess = true;
 
+    // Views
+    private RecyclerView mContainerStepsList;
+    private FrameLayout mContainerDetailView;
+    private Toolbar mToolBarPaging;
+    private TabLayout mTabBarPaging;
+    private ViewPager mViewPager;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_step_list);
-        mDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_step_detail);
-        mListBinding = DataBindingUtil.setContentView(this, R.layout.activity_step_list);
+//        setContentView(R.layout.activity_step_list);
+
+        mContainerStepsList = findViewById(R.id.containerStepsList);
+        mContainerDetailView = findViewById(R.id.containerStepsFragmentWide);
+        mToolBarPaging = findViewById(R.id.toolbarRecipeStepsPhone);
+        mTabBarPaging = findViewById(R.id.tabsRecipeSteps);
+        mViewPager = findViewById(R.id.viewsRecipeSteps);
         Bundle bundle = getIntent().getExtras();
+
+//        String s = String.valueOf(getTitle());
+//        setTitle(mRecipe.getName().toCharArray());
 //        Toolbar toolbar = mDetailBinding.toolbarRecipeStepsPhone;
 //        setSupportActionBar(toolbar);
 
         // init recycler
         mRecyclerHolderAdapter = new StepsListViewAdapter(this::onStepClick);
-        mListBinding.containerRecipeList.setHasFixedSize(true);
-        mListBinding.containerRecipeList.setAdapter(mRecyclerHolderAdapter);
+        mContainerStepsList.setHasFixedSize(true);
+        mContainerStepsList.setAdapter(mRecyclerHolderAdapter);
 
         if (bundle == null || !bundle.containsKey(Constants.keyFullRecipe)){
 
@@ -64,7 +80,7 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
         if (bundle.containsKey(Constants.keyLayoutMode)) {
             mTwoPane = bundle.getBoolean(Constants.keyLayoutMode);
         }
-        else if (findViewById(R.id.containerRecipeStepsWide) != null) {
+        else if (findViewById(R.id.containerStepsFragmentWide) != null) {
             mTwoPane = true;
         }
         if (bundle.containsKey(Constants.keyFullRecipe)) mRecipe = (Recipe) bundle.getSerializable(Constants.keyFullRecipe);
@@ -88,9 +104,9 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
 
             StepsFragmentPagerAdapter pagerAdapter = new StepsFragmentPagerAdapter(getApplicationContext(),
                     mRecipe.getSteps(), getSupportFragmentManager());
-            mDetailBinding.viewsRecipeSteps.setAdapter(pagerAdapter);
-            mDetailBinding.tabsRecipeSteps.setupWithViewPager(mDetailBinding.viewsRecipeSteps);
-            mDetailBinding.viewsRecipeSteps.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            mViewPager.setAdapter(pagerAdapter);
+            mTabBarPaging.setupWithViewPager(mViewPager);
+            mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int i, float v, int i1) {
 
@@ -108,7 +124,7 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
                 }
             });
 
-            mDetailBinding.viewsRecipeSteps.setCurrentItem(mStepNumber);
+            mViewPager.setCurrentItem(mStepNumber);
         }
     }
 
@@ -143,7 +159,7 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
     @Override
     public void onStepClick(int id) {
         this.mStepNumber = id;
-        mDetailBinding.viewsRecipeSteps.setCurrentItem(mStepNumber);
+        mViewPager.setCurrentItem(mStepNumber);
 
         if (mTwoPane) {
             Bundle arguments = new Bundle();
@@ -151,7 +167,7 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
             RecipeStepFragment fragment = new RecipeStepFragment();
             fragment.setArguments(arguments);
             this.getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.containerRecipeStepsWide, fragment)
+                    .replace(R.id.containerStepsFragmentWide, fragment)
                     .commit();
         } else {
 

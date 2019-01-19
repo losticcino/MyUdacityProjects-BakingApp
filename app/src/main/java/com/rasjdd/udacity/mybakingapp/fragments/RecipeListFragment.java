@@ -113,7 +113,7 @@ public class RecipeListFragment extends Fragment {
 
         mRecycler.setAdapter(mAdapter);
 
-        if (rootView.findViewById(R.id.containerRecipeStepsWide) != null) {
+        if (rootView.findViewById(R.id.containerStepsFragmentWide) != null) {
             mTwoPane = true;
             MainActivity.mTwoPane = true;
         }

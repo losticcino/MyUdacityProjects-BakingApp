@@ -3,6 +3,7 @@ package com.rasjdd.udacity.mybakingapp;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -30,21 +31,24 @@ import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
 public class StepDetailActivitySingle extends AppCompatActivity {
     private Recipe mRecipe;
     private int mStepNumber;
-    ActivityStepDetailBinding mDetailBinding;
-    ActivityStepListBinding mListBinding;
-    StepsListViewAdapter mRecyclerHolderAdapter;
-    private boolean mTwoPane;
     private boolean mFistAccess = true;
+    private Toolbar mToolBarPaging;
+    private TabLayout mTabBarPaging;
+    private ViewPager mViewPager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step_list);
-        mDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_step_detail);
-        mListBinding = DataBindingUtil.setContentView(this, R.layout.activity_step_list);
+
+
+        mToolBarPaging = findViewById(R.id.toolbarRecipeStepsPhone);
+        mTabBarPaging = findViewById(R.id.tabsRecipeSteps);
+        mViewPager = findViewById(R.id.viewsRecipeSteps);
+
         Bundle bundle = getIntent().getExtras();
-        Toolbar toolbar = mDetailBinding.toolbarRecipeStepsPhone;
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolBarPaging);
 
         if (bundle == null || !bundle.containsKey(Constants.keyFullRecipe)){
 
@@ -53,15 +57,14 @@ public class StepDetailActivitySingle extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
             NavUtils.navigateUpFromSameTask(this);
         }
+        else {
+            mRecipe = (Recipe) bundle.getSerializable(Constants.keyFullRecipe);
+        }
 
-        if (bundle.containsKey(Constants.keyLayoutMode)) mTwoPane = bundle.getBoolean(Constants.keyLayoutMode);
-        if (bundle.containsKey(Constants.keyFullRecipe)) mRecipe = (Recipe) bundle.getSerializable(Constants.keyFullRecipe);
         if (mFistAccess) {
             mStepNumber = bundle.getInt(Constants.keyStepNumber, 0);
             mFistAccess = false;
         }
-
-        mRecyclerHolderAdapter.setStepList(mRecipe.getSteps());
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
@@ -71,33 +74,31 @@ public class StepDetailActivitySingle extends AppCompatActivity {
             actionBar.setHideOffset(0);
         }
 
-        if (mTwoPane) {
-            // ---------- Fragment Pager for the Step Details Views ---------
+        // ---------- Fragment Pager for the Step Details Views ---------
 
-            StepsFragmentPagerAdapter pagerAdapter = new StepsFragmentPagerAdapter(getApplicationContext(),
-                    mRecipe.getSteps(), getSupportFragmentManager());
-            mDetailBinding.viewsRecipeSteps.setAdapter(pagerAdapter);
-            mDetailBinding.tabsRecipeSteps.setupWithViewPager(mDetailBinding.viewsRecipeSteps);
-            mDetailBinding.viewsRecipeSteps.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int i, float v, int i1) {
+        StepsFragmentPagerAdapter pagerAdapter = new StepsFragmentPagerAdapter(getApplicationContext(),
+                mRecipe.getSteps(), getSupportFragmentManager());
+        mViewPager.setAdapter(pagerAdapter);
+        mTabBarPaging.setupWithViewPager(mViewPager);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
 
-                }
+            }
 
-                @Override
-                public void onPageSelected(int i) {
-                    actionBar.setTitle(mRecipe.getSteps().get(i).getShortDescription());
-                    mStepNumber = i;
-                }
+            @Override
+            public void onPageSelected(int i) {
+                actionBar.setTitle(mRecipe.getSteps().get(i).getShortDescription());
+                mStepNumber = i;
+            }
 
-                @Override
-                public void onPageScrollStateChanged(int i) {
+            @Override
+            public void onPageScrollStateChanged(int i) {
 
-                }
-            });
+            }
+        });
 
-            mDetailBinding.viewsRecipeSteps.setCurrentItem(mStepNumber);
-        }
+        mViewPager.setCurrentItem(mStepNumber);
     }
 
     @Override
