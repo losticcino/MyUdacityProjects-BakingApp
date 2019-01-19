@@ -55,5 +55,6 @@
     <string name="send_to_widget">Send to Widget</string>
     <string name="title_step_detail">Step Details</string>
     <string name="title_step_detail_single">Single Window Step Details</string>
+    <string name="text_ingredient_list">Ingredients</string>
 
 </resources>

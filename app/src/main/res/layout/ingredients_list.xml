@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+<android.support.v7.widget.CardView
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="6dp"
+    android:layout_marginEnd="6dp"
+    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardCornerRadius="4dp"
+    app:cardElevation="0dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:id="@+id/ingredient_list_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="79dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="12dp"
+        android:textColor="@android:color/white"
+        android:textSize="30dp"
+        tools:text="@string/tv_text_ingredient_list" />
+</android.support.v7.widget.CardView>
+
+<TextView
+android:id="@+id/title_text"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_marginTop="8dp"
+android:background="@drawable/round_tv"
+android:paddingStart="@dimen/margin_extra_large"
+android:paddingTop="8dp"
+android:paddingEnd="12dp"
+android:paddingBottom="6dp"
+android:text="@string/text_ingredient_list"
+android:textColor="@android:color/white"
+android:textSize="30dp"
+app:layout_constraintEnd_toEndOf="@+id/cardView"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
