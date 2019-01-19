@@ -17,8 +17,7 @@ public class AppUtilities {
         // Save to Shared Preferences
         SharedPreferences.Editor spe = context.getSharedPreferences(Constants.keyAppPreferences, Context.MODE_PRIVATE).edit();
         spe.putString(Constants.keyWidgetRecipe, serialRecipe);
-        boolean bool = spe.commit();
-        return bool;
+        return spe.commit();
     }
 
     public static Recipe loadRecipe(Context context) {
@@ -28,10 +27,10 @@ public class AppUtilities {
         String serilRecipe = preferences.getString(Constants.keyWidgetRecipe, Constants.InvalidString);
 
         // verify a valid response
+        assert serilRecipe != null;
         if (!serilRecipe.equals(Constants.InvalidString)) {
             Gson gson = new Gson();
-            Recipe recipe = gson.fromJson(serilRecipe, Recipe.class);
-            return recipe;
+            return gson.fromJson(serilRecipe, Recipe.class);
         }
 
         return null;

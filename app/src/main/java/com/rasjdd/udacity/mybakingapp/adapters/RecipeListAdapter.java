@@ -72,16 +72,16 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         }
     }
 
-    public class RecipeListViewHolder extends RecyclerView.ViewHolder {
+    class RecipeListViewHolder extends RecyclerView.ViewHolder {
         final TextView mNameView;
         final TextView mDetailView;
         final ImageView mImagePreview;
 
         RecipeListViewHolder(@NonNull View itemView) {
             super(itemView);
-            mNameView = (TextView) itemView.findViewById(R.id.textRecipeCardName);
-            mDetailView = (TextView) itemView.findViewById(R.id.textRecipeCardDetails);
-            mImagePreview = (ImageView) itemView.findViewById(R.id.imageRecipeCardPreview);
+            mNameView = itemView.findViewById(R.id.textRecipeCardName);
+            mDetailView = itemView.findViewById(R.id.textRecipeCardDetails);
+            mImagePreview = itemView.findViewById(R.id.imageRecipeCardPreview);
         }
     }
 

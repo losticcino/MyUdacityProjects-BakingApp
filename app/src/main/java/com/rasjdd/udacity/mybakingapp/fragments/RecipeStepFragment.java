@@ -28,6 +28,8 @@ import com.rasjdd.udacity.mybakingapp.models.Step;
 import com.rasjdd.udacity.mybakingapp.utilities.Constants;
 import com.rasjdd.udacity.mybakingapp.utilities.NetUtils;
 
+import java.util.Objects;
+
 /**
  * A fragment representing a single Recipe detail screen.
  * in two-pane mode (on tablets) or a {@link StepDetailActivity}
@@ -60,6 +62,7 @@ public class RecipeStepFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        assert getArguments() != null;
         if (getArguments().containsKey(Constants.keyRecipeStep)) {
             mStep = (Step) getArguments().getSerializable(Constants.keyRecipeStep);
             mVideoTimeStamp = getArguments().getLong(Constants.keyPlayerPosition);
@@ -67,7 +70,7 @@ public class RecipeStepFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_step_detail, container, false);
 
@@ -79,7 +82,7 @@ public class RecipeStepFragment extends Fragment {
         TextView textView = rootView.findViewById(R.id.textStepInstructions);
         TextView noticeView = rootView.findViewById(R.id.textNoVideoNotice);
 
-        Display display = ((WindowManager) this.getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+        Display display = ((WindowManager) Objects.requireNonNull(this.getContext()).getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int rotation = display.getRotation();
 
         if (savedInstanceState != null && savedInstanceState.containsKey(Constants.keyPlayerPosition)) {

@@ -66,8 +66,8 @@ public class StepsListViewAdapter extends RecyclerView.Adapter<StepsListViewAdap
 
         StepsListViewHolder(@NonNull View itemView) {
             super(itemView);
-            mNameView = (TextView) itemView.findViewById(R.id.textStepCardName);
-            mDetailView = (TextView) itemView.findViewById(R.id.textStepCardDetails);
+            mNameView = itemView.findViewById(R.id.textStepCardName);
+            mDetailView = itemView.findViewById(R.id.textStepCardDetails);
             itemView.setOnClickListener(this);
         }
 

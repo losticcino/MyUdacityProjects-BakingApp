@@ -30,7 +30,6 @@ public class NetUtils {
         if (s.toLowerCase().endsWith(".jpg")) return true;
 //        else if (s.toLowerCase().endsWith(".jpeg")) return true; //Supposedly Picasso doesn't support this?  TEST!
         else if (s.toLowerCase().endsWith(".png")) return true;
-        else if (s.toLowerCase().endsWith(".bmp")) return true;
-        else return false;
+        else return s.toLowerCase().endsWith(".bmp");
     }
 }
