@@ -53,7 +53,7 @@ I literally watched a an icon jump from a v24 to an xxhdpi to the drawable roots
 
 # Other Attribution
 
-I did have help, including from my brother and reviewing other projects.  All of the code in here was typed and changed and done by me or from using the Android templates (Which I do not feel counts as plagiarism since this is an education, not commercial, project.).  When looking to examples I only used and transformed the parts I was comfortable with or understood the what and why.
+I did have help, including friends and reviewing other projects.  All of the code in here was typed and changed and done by me or from using the Android templates (Which I do not feel counts as plagiarism since this is an education, not commercial, project.)  When looking to examples I only used and transformed the parts I was comfortable with or understood the what and why.
 
 I had a few other libraries for beautifying recycler usage etc, but eventually stripped them out because of other Android Studio issues I was blaming on the libraries.
 
