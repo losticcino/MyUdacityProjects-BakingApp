@@ -8,7 +8,7 @@
         android:id="@+id/progressRecipeListFragment"
         android:layout_width="@dimen/progress_x"
         android:layout_height="@dimen/progress_y"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/margin_large"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="parent"

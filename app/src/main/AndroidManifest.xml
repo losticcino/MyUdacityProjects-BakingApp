@@ -51,8 +51,7 @@
         <activity
             android:name=".StepDetailActivitySingle"
             android:label="@string/title_step_detail_single"
-            android:parentActivityName=".StepDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".StepDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.rasjdd.udacity.mybakingapp.StepDetailActivity" />

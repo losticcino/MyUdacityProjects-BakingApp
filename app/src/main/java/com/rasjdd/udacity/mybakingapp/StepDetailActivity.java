@@ -24,6 +24,9 @@ import com.rasjdd.udacity.mybakingapp.utilities.Constants;
 import com.rasjdd.udacity.mybakingapp.utilities.DisplayUtilities;
 import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
 
+import icepick.Icepick;
+import icepick.State;
+
 /**
  * An activity representing a single Recipe detail screen. This
  * activity is only used on narrow width devices. On tablet-size devices,
@@ -31,10 +34,15 @@ import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
  */
 public class StepDetailActivity extends AppCompatActivity implements StepsListViewAdapter.StepListOnClickHandler {
     private Recipe mRecipe;
-    private int mStepNumber;
+
+    @State
+    int mStepNumber;
+//    private int mStepNumber;
+
     StepsListViewAdapter mRecyclerHolderAdapter;
     private boolean mTwoPane;
     private boolean mFistAccess = true;
+
 
     // Views
     private RecyclerView mContainerStepsList;
@@ -48,12 +56,12 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_step_list);
+        Icepick.restoreInstanceState(this, savedInstanceState);
+        setContentView(R.layout.activity_step_list_twopane);
+
         mTextIngredients = findViewById(R.id.textIngredientList);
-
-        mTwoPane = getResources().getBoolean(R.bool.mTwoPane);
-
         mContainerStepsList = findViewById(R.id.containerStepsList);
+        mTwoPane = getResources().getBoolean(R.bool.mTwoPane);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -79,20 +87,24 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
 
         setTitle(mRecipe.getName());
 
+        int mIngredientCounter = 0;
         for (Ingredient ingredient : mRecipe.getIngredients()) {
-            DisplayUtilities.prettyIngredientView(ingredient, mTextIngredients);
+            if (mIngredientCounter <= 4) {
+                DisplayUtilities.prettyIngredientView(ingredient, mTextIngredients, 28);
+            } else DisplayUtilities.prettyIngredientView(ingredient, mTextIngredients, 0);
             mTextIngredients.append("\n");
+            mIngredientCounter++;
+
         }
 
         mRecyclerHolderAdapter.setStepList(mRecipe.getSteps());
-
 
         if (mTwoPane) {
 
             mContainerDetailView = findViewById(R.id.containerStepsFragmentWide);
             mToolBarPaging = findViewById(R.id.toolbarRecipeStepsPhone);
-            mTabBarPaging = findViewById(R.id.tabsRecipeSteps);
-            mViewPager = findViewById(R.id.viewsRecipeSteps);
+            mTabBarPaging = findViewById(R.id.tabsRecipeStepsTablet);
+            mViewPager = findViewById(R.id.viewsRecipeStepsTablet);
 
             // ---------- Fragment Pager for the Step Details Views ---------
 
@@ -148,6 +160,7 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
         super.onSaveInstanceState(outState);
         outState.putSerializable(Constants.keyFullRecipe, mRecipe);
         outState.putInt(Constants.keyStepNumber, mStepNumber);
+        Icepick.saveInstanceState(this, outState);
     }
 
     @Override

@@ -101,6 +101,19 @@ public class RecipeListFragment extends Fragment {
 
         getRecipeList(this.getContext());
         mLoading = true;
+
+        // Idler for test
+        if (getActivity() != null) {
+            appSupervisor = (AppSupervisor) getActivity().getApplicationContext();
+            appSupervisor.setIdleState(false);
+
+            if (savedInstanceState != null && savedInstanceState.containsKey(Constants.keyRecipeList)) {
+                mRecipes = (ArrayList<Recipe>) savedInstanceState.getSerializable(Constants.keyRecipeList);
+
+                mRecycler.setAdapter(new RecipeListAdapter(getActivity().getApplicationContext(),
+                        position -> mClickListener.onRecipeSelected(mRecipes.get(position))));
+            }
+        }
     }
 
     @Override
@@ -121,34 +134,9 @@ public class RecipeListFragment extends Fragment {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         mGridManager.setSpanCount(metrics.widthPixels / 800);
 
-//        mAdapter = new RecipeListAdapter(this.getContext(), mClickListener);
-
         mProgressBar = rootView.findViewById(R.id.progressRecipeListFragment);
 
         if (mLoading) mProgressBar.setVisibility(View.VISIBLE);
-
-//        if (mRecipe != null) {
-//            for (Step step : mRecipe.getSteps()) {
-//                ((TextView) rootView.findViewById(R.id.recipe_detail))
-//                        .append(step.getDescription() + "\n\n");
-//            }
-//
-//        }
-
-        // Test for Two-Pane mode
-
-        // Idler for test
-        if (getActivity() != null) {
-            appSupervisor = (AppSupervisor) getActivity().getApplicationContext();
-            appSupervisor.setIdleState(false);
-
-            if (savedInstanceState != null && savedInstanceState.containsKey(Constants.keyRecipeList)) {
-                mRecipes = (ArrayList<Recipe>) savedInstanceState.getSerializable(Constants.keyRecipeList);
-
-                mRecycler.setAdapter(new RecipeListAdapter(getActivity().getApplicationContext(),
-                        position -> mClickListener.onRecipeSelected(mRecipes.get(position))));
-            }
-        }
 
         return rootView;
     }
@@ -191,6 +179,8 @@ public class RecipeListFragment extends Fragment {
 
             // Do something already!
             mAdapter.setRecipeList(mRecipes);
+
+            appSupervisor.setIdleState(true);
         }
     }
 

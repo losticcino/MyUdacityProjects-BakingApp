@@ -5,8 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -67,6 +70,7 @@ public class RecipeStepFragment extends Fragment {
             mStep = (Step) getArguments().getSerializable(Constants.keyRecipeStep);
             mVideoTimeStamp = getArguments().getLong(Constants.keyPlayerPosition);
         }
+
     }
 
     @Override
@@ -74,13 +78,10 @@ public class RecipeStepFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_step_detail, container, false);
 
-//        String[] localizedTitleNames = this.getResources().getStringArray(R.array.step_title_for_localization);
-//        if (mStep.getId() <= localizedTitleNames.length) this.getActivity().setTitle(localizedTitleNames[mStep.getId()]);
-//        else this.getActivity().setTitle(String.valueOf(this.getString(R.string.step)));
-
         mPlayerView = rootView.findViewById(R.id.playerStepVideo);
         TextView textView = rootView.findViewById(R.id.textStepInstructions);
         TextView noticeView = rootView.findViewById(R.id.textNoVideoNotice);
+        NestedScrollView recipeStepContainer = rootView.findViewById(R.id.containerStepsInformation);
 
         Display display = ((WindowManager) Objects.requireNonNull(this.getContext()).getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int rotation = display.getRotation();
@@ -104,8 +105,9 @@ public class RecipeStepFragment extends Fragment {
         } else {
             mPlayerView.setVisibility(View.GONE);
             if ((rotation == 1) || (rotation == 3)) {
-                textView.setVisibility(View.VISIBLE);
                 noticeView.setVisibility(View.VISIBLE);
+                textView.setVisibility(View.VISIBLE);
+                recipeStepContainer.setVisibility(View.VISIBLE);
             }
         }
         return rootView;
@@ -115,33 +117,20 @@ public class RecipeStepFragment extends Fragment {
         if (mVideoPlayer == null) {
             mVideoPlayer = ExoPlayerFactory.newSimpleInstance(new DefaultRenderersFactory(context),
                     new DefaultTrackSelector(), new DefaultLoadControl());
+
+            // attach to view
             mPlayerView.setPlayer(mVideoPlayer);
             mVideoPlayer.seekTo(mVideoTimeStamp);
             mPlayerView.setVisibility(View.VISIBLE);
         }
+
         MediaSource mediaSource = new ExtractorMediaSource
                 .Factory(new DefaultHttpDataSourceFactory("UdacityProject - Exoplayer"))
                 .createMediaSource(Uri.parse(videoURL));
+
         mVideoPlayer.prepare(mediaSource, true, false);
-    }
+        if (mVideoTimeStamp != 0) mVideoPlayer.seekTo(mVideoTimeStamp);
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putLong(Constants.keyPlayerPosition, mVideoPlayer.getContentPosition());
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        exitExoPlayer();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        exitExoPlayer();
     }
 
     private void exitExoPlayer() {
@@ -151,6 +140,53 @@ public class RecipeStepFragment extends Fragment {
             mVideoPlayer.stop();
             mVideoPlayer.release();
             mVideoPlayer = null;
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        if (mVideoPlayer != null) outState.putLong(Constants.keyPlayerPosition, mVideoPlayer.getContentPosition());
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onPause() {
+        exitExoPlayer();
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        exitExoPlayer();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDetach() {
+        exitExoPlayer();
+        super.onDetach();
+    }
+
+    @Override
+    public void onStop() {
+        exitExoPlayer();
+        super.onStop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        String resumeStringUrl = NetUtils.detectThumbnailURL(mStep.getVideoURL(), mStep.getThumbnailURL());
+
+        if (!resumeStringUrl.equals(Constants.InvalidString)) {
+            initializeVideoPlayer(resumeStringUrl, getContext());
         }
     }
 }

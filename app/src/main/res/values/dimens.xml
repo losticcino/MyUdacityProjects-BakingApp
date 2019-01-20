@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
     <dimen name="app_bar_height">200dp</dimen>
     <dimen name="item_width">370dp</dimen>
-    <dimen name="text_margin">16dp</dimen>
     <dimen name="step_player_height">300dp</dimen>
     <dimen name="progress_x">250dp</dimen>
     <dimen name="progress_y">250dp</dimen>
+    <dimen name="margin_micro">2dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_medium">6dp</dimen>
+    <dimen name="margin_large">8dp</dimen>
+    <dimen name="margin_gigantic">16dp</dimen>
+    <dimen name="margin_brobdingnagian">40dp</dimen>
 
     <!--
 Refer to App Widget Documentation for margin information
