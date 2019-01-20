@@ -21,6 +21,7 @@ import com.rasjdd.udacity.mybakingapp.utilities.Constants;
 import com.rasjdd.udacity.mybakingapp.widget.IngredientListWidgetService;
 
 import icepick.Icepick;
+import icepick.State;
 
 /**
  * An activity representing a single Recipe detail screen. This
@@ -29,10 +30,12 @@ import icepick.Icepick;
  */
 public class StepDetailActivitySingle extends AppCompatActivity implements StepsListViewAdapter.StepListOnClickHandler {
     private Recipe mRecipe;
-    private int mStepNumber;
+
+    @State
+    int mStepNumber;
+//    private int mStepNumber;
+
     private boolean mFistAccess = true;
-    private Toolbar mToolBarPaging;
-    private TabLayout mTabBarPaging;
     private ViewPager mViewPager;
 
 
@@ -40,15 +43,15 @@ public class StepDetailActivitySingle extends AppCompatActivity implements Steps
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Icepick.restoreInstanceState(this, savedInstanceState);
-        setContentView(R.layout.activity_step_detail);
+        setContentView(R.layout.activity_step_detail_singlepane);
 
 
-        mToolBarPaging = findViewById(R.id.toolbarRecipeStepsPhone);
-        mTabBarPaging = findViewById(R.id.tabsRecipeSteps);
-        mViewPager = findViewById(R.id.viewsRecipeSteps);
+        Toolbar mToolBarPaging = findViewById(R.id.toolbarRecipeStepsPhone);
+        TabLayout mTabBarPaging = findViewById(R.id.tabsRecipeStepsPhone);
+        mViewPager = findViewById(R.id.viewsRecipeStepsPhone);
 
         Bundle bundle = getIntent().getExtras();
-        setSupportActionBar(mToolBarPaging);
+//        setSupportActionBar(mToolBarPaging);
 
         if (bundle == null || !bundle.containsKey(Constants.keyFullRecipe)) {
 
@@ -112,7 +115,7 @@ public class StepDetailActivitySingle extends AppCompatActivity implements Steps
         int id = item.getItemId();
         switch (id) {
             case android.R.id.home:
-                navigateUpTo(new Intent(this, MainActivity.class));
+                navigateUpTo(new Intent(this, StepDetailActivitySingle.class));
                 return true;
             case R.id.actionSendToWidget:
                 IngredientListWidgetService.updateWidget(this, mRecipe);
@@ -140,7 +143,7 @@ public class StepDetailActivitySingle extends AppCompatActivity implements Steps
         RecipeStepFragment fragment = new RecipeStepFragment();
         fragment.setArguments(arguments);
         this.getSupportFragmentManager().beginTransaction()
-                .replace(R.id.containerStepsFragmentWide, fragment)
+                .replace(R.id.containerStepsFragmentWide, fragment, Constants.nameFragmentStep)
                 .commit();
     }
 }

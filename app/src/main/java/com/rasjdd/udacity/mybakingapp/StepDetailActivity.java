@@ -35,7 +35,8 @@ import icepick.State;
 public class StepDetailActivity extends AppCompatActivity implements StepsListViewAdapter.StepListOnClickHandler {
     private Recipe mRecipe;
 
-    @State int mStepNumber;
+    @State
+    int mStepNumber;
 //    private int mStepNumber;
 
     StepsListViewAdapter mRecyclerHolderAdapter;
@@ -56,7 +57,7 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Icepick.restoreInstanceState(this, savedInstanceState);
-        setContentView(R.layout.activity_step_list);
+        setContentView(R.layout.activity_step_list_twopane);
 
         mTextIngredients = findViewById(R.id.textIngredientList);
         mContainerStepsList = findViewById(R.id.containerStepsList);
@@ -86,20 +87,24 @@ public class StepDetailActivity extends AppCompatActivity implements StepsListVi
 
         setTitle(mRecipe.getName());
 
+        int mIngredientCounter = 0;
         for (Ingredient ingredient : mRecipe.getIngredients()) {
-            DisplayUtilities.prettyIngredientView(ingredient, mTextIngredients);
+            if (mIngredientCounter <= 4) {
+                DisplayUtilities.prettyIngredientView(ingredient, mTextIngredients, 28);
+            } else DisplayUtilities.prettyIngredientView(ingredient, mTextIngredients, 0);
             mTextIngredients.append("\n");
+            mIngredientCounter++;
+
         }
 
         mRecyclerHolderAdapter.setStepList(mRecipe.getSteps());
-
 
         if (mTwoPane) {
 
             mContainerDetailView = findViewById(R.id.containerStepsFragmentWide);
             mToolBarPaging = findViewById(R.id.toolbarRecipeStepsPhone);
-            mTabBarPaging = findViewById(R.id.tabsRecipeSteps);
-            mViewPager = findViewById(R.id.viewsRecipeSteps);
+            mTabBarPaging = findViewById(R.id.tabsRecipeStepsTablet);
+            mViewPager = findViewById(R.id.viewsRecipeStepsTablet);
 
             // ---------- Fragment Pager for the Step Details Views ---------
 

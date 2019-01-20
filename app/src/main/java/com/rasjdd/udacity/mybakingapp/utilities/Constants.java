@@ -17,6 +17,12 @@ public class Constants {
     public static final String keyLayoutMode = "07aafd11-f1be-4031-b193-3a87cf8d03ed";
     public static final String keyStepNumber = "dbe97155-803c-4ff8-8829-6298485a4610";
 
+    // Internal Fragment Names (Do not need translation)
+
+    public static final String nameFragmentRecipe = "Recipe Fragment";
+    public static final String nameFragmentStep = "Step Fragment";
+    public static final String nameFragmentIngredient = "Ingredient Fragment";
+
     // Safe Null Values
     public static final String InvalidString = "This is a constant-defined null string." +
             "The purpose of this string it to have a static invalid value that is not null for program integrity";

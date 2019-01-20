@@ -6,23 +6,22 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context=".StepDetailActivity"
-    tools:ignore="MergeRootFrame">
+    tools:context=".StepDetailActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBar"
+    <!--<android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
         android:background="@color/colorThreePrimary"
         app:elevation="0dp">
 
-    </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.AppBarLayout>-->
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbarRecipeStepsPhone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     <LinearLayout
@@ -31,7 +30,7 @@
         android:orientation="vertical">
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/tabsRecipeSteps"
+            android:id="@+id/tabsRecipeStepsPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
@@ -41,7 +40,7 @@
             app:tabTextColor="@color/textLight" />
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/viewsRecipeSteps"
+            android:id="@+id/viewsRecipeStepsPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

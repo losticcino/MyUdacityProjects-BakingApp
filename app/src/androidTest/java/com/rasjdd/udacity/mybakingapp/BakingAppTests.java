@@ -1,6 +1,5 @@
 package com.rasjdd.udacity.mybakingapp;
 
-import android.content.Intent;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -28,25 +27,34 @@ public class BakingAppTests extends BaseTest {
         Intents.init();
 
         Navigation.getMeToRecipeDetail(0);
-        intended(hasExtraWithKey(Constants.RecipeListUrl));
+        intended(hasExtraWithKey(Constants.keyFullRecipe));
 
         Intents.release();
     }
 
     @Test
     public void clickOnRecyclerViewItem_opensRecipeInfoActivity() {
-        Navigation.getMeToRecipeDetail(0);
+        int randomRecipe = ThreadLocalRandom.current().nextInt(0, 4);
+
+        Navigation.getMeToRecipeDetail(randomRecipe);
 
         onView(withId(R.id.recipe_detail))
                 .check(matches(isDisplayed()));
 
-        onView(withId(R.id.viewsRecipeSteps))
-                .check(matches(isDisplayed()));
+        boolean multiPaneMode = appSupervisor.getResources().getBoolean(R.bool.mTwoPane);
+
+        if (!multiPaneMode) {
+            onView(withId(R.id.viewsRecipeStepsPhone))
+                    .check(matches(isDisplayed()));
+        } else {
+            onView(withId(R.id.viewsRecipeStepsTablet))
+                    .check(matches(isDisplayed()));
+        }
     }
 
     @Test
     public void clickRecyclerViewStep_opensRecipeDetailsStepActivity() {
-        int randomRecipe = ThreadLocalRandom.current().nextInt(0,4);
+        int randomRecipe = ThreadLocalRandom.current().nextInt(0, 4);
 
         Navigation.getMeToRecipeDetail(randomRecipe);
 
@@ -63,8 +71,7 @@ public class BakingAppTests extends BaseTest {
 
             onView(withId(R.id.recipe_detail))
                     .check(matches(isCompletelyDisplayed()));
-        }
-        else {
+        } else {
             Navigation.selectRecipeStep(1);
 
             onView(withId(R.id.playerStepVideo))

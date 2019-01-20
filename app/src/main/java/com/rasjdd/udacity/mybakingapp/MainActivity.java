@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity implements RecipeListFragmen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mTwoPane = getResources().getBoolean(R.bool.mTwoPane);
     }
 
 

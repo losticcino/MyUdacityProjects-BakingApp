@@ -1,12 +1,11 @@
 package com.rasjdd.udacity.mybakingapp.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
+import android.support.v4.widget.NestedScrollView;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,14 +22,12 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.rasjdd.udacity.mybakingapp.R;
 import com.rasjdd.udacity.mybakingapp.StepDetailActivity;
 import com.rasjdd.udacity.mybakingapp.models.Recipe;
 import com.rasjdd.udacity.mybakingapp.models.Step;
-import com.rasjdd.udacity.mybakingapp.utilities.AppUtilities;
 import com.rasjdd.udacity.mybakingapp.utilities.Constants;
 import com.rasjdd.udacity.mybakingapp.utilities.NetUtils;
 
@@ -68,7 +65,6 @@ public class RecipeStepFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         assert getArguments() != null;
         if (getArguments().containsKey(Constants.keyRecipeStep)) {
             mStep = (Step) getArguments().getSerializable(Constants.keyRecipeStep);
@@ -85,6 +81,7 @@ public class RecipeStepFragment extends Fragment {
         mPlayerView = rootView.findViewById(R.id.playerStepVideo);
         TextView textView = rootView.findViewById(R.id.textStepInstructions);
         TextView noticeView = rootView.findViewById(R.id.textNoVideoNotice);
+        NestedScrollView recipeStepContainer = rootView.findViewById(R.id.containerStepsInformation);
 
         Display display = ((WindowManager) Objects.requireNonNull(this.getContext()).getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         int rotation = display.getRotation();
@@ -108,8 +105,9 @@ public class RecipeStepFragment extends Fragment {
         } else {
             mPlayerView.setVisibility(View.GONE);
             if ((rotation == 1) || (rotation == 3)) {
-                textView.setVisibility(View.VISIBLE);
                 noticeView.setVisibility(View.VISIBLE);
+                textView.setVisibility(View.VISIBLE);
+                recipeStepContainer.setVisibility(View.VISIBLE);
             }
         }
         return rootView;
@@ -152,21 +150,33 @@ public class RecipeStepFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putLong(Constants.keyPlayerPosition, mVideoPlayer.getContentPosition());
+        if (mVideoPlayer != null) outState.putLong(Constants.keyPlayerPosition, mVideoPlayer.getContentPosition());
 
+        super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onPause() {
-        super.onPause();
         exitExoPlayer();
+        super.onPause();
     }
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         exitExoPlayer();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onDetach() {
+        exitExoPlayer();
+        super.onDetach();
+    }
+
+    @Override
+    public void onStop() {
+        exitExoPlayer();
+        super.onStop();
     }
 
     @Override
@@ -175,13 +185,8 @@ public class RecipeStepFragment extends Fragment {
 
         String resumeStringUrl = NetUtils.detectThumbnailURL(mStep.getVideoURL(), mStep.getThumbnailURL());
 
-        if ( resumeStringUrl != Constants.InvalidString) {
+        if (!resumeStringUrl.equals(Constants.InvalidString)) {
             initializeVideoPlayer(resumeStringUrl, getContext());
         }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
     }
 }
